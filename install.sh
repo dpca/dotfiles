@@ -2,7 +2,7 @@
 
 dir=$PWD
 olddir=~/dotfiles_old
-files="vimrc"
+files="vimrc zshrc"
 
 mkdir -p $olddir # Make a backup
 
