@@ -2,7 +2,7 @@
 
 dir=$PWD
 olddir=~/dotfiles_old
-files="vimrc zshrc"
+files="vimrc zshrc rubocop.yml"
 
 mkdir -p $olddir # Make a backup
 

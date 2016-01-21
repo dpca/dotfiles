@@ -1,0 +1,3 @@
+Style/DotPosition:
+  Enabled: true
+  EnforcedStyle: trailing
