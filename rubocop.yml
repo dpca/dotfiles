@@ -1,3 +1,9 @@
 Style/DotPosition:
   Enabled: true
   EnforcedStyle: trailing
+
+Style/SignalException:
+  Enabled: false
+
+Metrics/ClassLength:
+  Enabled: false
