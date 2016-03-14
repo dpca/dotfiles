@@ -85,8 +85,7 @@ set expandtab
 set list listchars=tab:»·,trail:·,nbsp:· " Trailing whitespace
 
 " Show column at 80
-set textwidth=80
-set colorcolumn=+1
+set colorcolumn=80
 
 " Tag completion using excuberant ctags
 set tags=tags;/
