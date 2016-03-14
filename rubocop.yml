@@ -1,3 +1,6 @@
+AllCops:
+  TargetRubyVersion: 2.1
+
 Style/DotPosition:
   Enabled: true
   EnforcedStyle: trailing
@@ -7,3 +10,7 @@ Style/SignalException:
 
 Metrics/ClassLength:
   Enabled: false
+
+Style/TrailingCommaInLiteral:
+  Enabled: true
+  EnforcedStyleForMultiline: comma
