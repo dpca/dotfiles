@@ -16,10 +16,6 @@ fi
 
 export PATH="$HOME/.bin:$PATH"
 
-# Node
-export PATH="$PATH:/usr/local/lib/node_modules"
-source $(brew --prefix nvm)/nvm.sh
-
 # Ruby
 export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - zsh --no-rehash)"
