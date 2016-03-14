@@ -172,3 +172,6 @@ autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 
 " Disable hiding quotes for json
 let g:vim_json_syntax_conceal = 0
+
+" JSX in js files
+let g:jsx_ext_required = 0
