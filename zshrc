@@ -25,6 +25,7 @@ export PATH="$HOME/Library/Haskell/bin:$PATH"
 
 # Aliases
 alias docker-stop-all='docker stop $(docker ps -a -q)'
+alias docker-stop-running='docker stop $(docker ps -q)'
 alias docker-remove-exited='docker rm -v $(docker ps -a -q -f status=exited)'
 alias docker-remove-dangling='docker rmi $(docker images -f "dangling=true" -q)'
 alias docker-remove-stopped='docker rm $(docker ps -qa)'
