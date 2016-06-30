@@ -23,9 +23,6 @@ eval "$(rbenv init - zsh --no-rehash)"
 # Haskell
 export PATH="$HOME/Library/Haskell/bin:$PATH"
 
-# Docker
-eval "$(docker-machine env default)"
-
 # Aliases
 alias docker-stop-all='docker stop $(docker ps -a -q)'
 alias docker-remove-exited='docker rm -v $(docker ps -a -q -f status=exited)'
