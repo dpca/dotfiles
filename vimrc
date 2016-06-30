@@ -74,6 +74,7 @@ set ruler
 set showcmd
 set laststatus=2
 set number
+set relativenumber
 set shortmess=atI
 
 " Tab settings
