@@ -31,6 +31,7 @@ Plugin 'mbbill/undotree'
 Plugin 'bling/vim-airline'
 Plugin 'altercation/vim-colors-solarized'
 Plugin 'bronson/vim-trailing-whitespace'
+Plugin 'flazz/vim-colorschemes'
 
 " Git
 Plugin 'tpope/vim-fugitive'
@@ -107,9 +108,12 @@ set undolevels=1000
 set undoreload=10000
 
 " Solarized color scheme
-syntax on
-color solarized
+syntax enable
 set background=dark
+if $SSH_CONNECTION
+  let g:solarized_termcolors=256
+endif
+colorscheme solarized
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 set grepprg=ag\ --nogroup\ --nocolor " Use Ag over Grep
