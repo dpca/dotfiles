@@ -26,6 +26,7 @@ Plugin 'vim-scripts/matchit.zip'
 Plugin 'mattn/emmet-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'mbbill/undotree'
+Plugin 'janko-m/vim-test'
 
 " Display
 Plugin 'bling/vim-airline'
@@ -91,7 +92,7 @@ set colorcolumn=80
 
 " Tag completion using excuberant ctags
 set tags=tags;/
-set wildignore+=*/tmp/*,*/.git/*,*/.bundle/*,*/coverage/*,*/public/*,*/log/*,*/vendor/*,*/doc/*
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip*/.git/*,*/.bundle/*,*/coverage/*,*/public/*,*/log/*,*/vendor/*,*/doc/*,*.o,*.obj,.git,node_modules/**,bower_components/**,**/node_modules/**,_build/**,deps/**,*.beam
 
 " Search settings
 set incsearch
@@ -117,16 +118,17 @@ colorscheme solarized
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
 set grepprg=ag\ --nogroup\ --nocolor " Use Ag over Grep
-let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+let g:ctrlp_user_command = 'ag %s --path-to-agignore ~/.agignore -l --nocolor --hidden -g ""'
 let g:ctrlp_use_caching = 0
 
 " Syntastic settings
 let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
+let g:syntastic_aggregate_errors = 1
 "let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [], 'passive_filetypes': ['ruby'] }
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [], 'passive_filetypes': [] }
-let g:syntastic_ruby_checkers = ['rubocop']
+let g:syntastic_ruby_checkers = ['rubocop', 'reek']
 let g:syntastic_javascript_checkers = ['eslint']
 let g:syntastic_html_checkers = ['eslint']
 let g:syntastic_haskell_checkers = ['hlint']
@@ -181,3 +183,6 @@ let g:vim_json_syntax_conceal = 0
 
 " JSX in js files
 let g:jsx_ext_required = 0
+
+" Elixir
+map <leader><space> :TestFile<CR>
