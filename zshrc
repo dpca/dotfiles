@@ -23,6 +23,9 @@ eval "$(rbenv init - zsh --no-rehash)"
 # Haskell
 export PATH="$HOME/Library/Haskell/bin:$PATH"
 
+# Autojump
+[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
 # Aliases
 alias docker-stop-all='docker stop $(docker ps -a -q)'
 alias docker-stop-running='docker stop $(docker ps -q)'
