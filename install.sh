@@ -2,7 +2,7 @@
 
 dir=$PWD
 olddir=~/dotfiles_old
-files="vimrc zshrc rubocop.yml"
+files="vimrc zshrc rubocop.yml tmux.conf"
 
 mkdir -p $olddir # Make a backup
 
