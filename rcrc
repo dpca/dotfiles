@@ -1,0 +1,2 @@
+EXCLUDES="README.md LICENSE setup"
+DOTFILES_DIRS="$HOME/dotfiles"
