@@ -9,7 +9,7 @@ my own needs.
 
 ```bash
 git clone git@github.com:dpca/dotfiles.git ~/dotfiles
-setup/mac
+~/dotfiles/setup/mac
 ```
 
 Run `rcup` after adding new files to the directory to properly symlink them.

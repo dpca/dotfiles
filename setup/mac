@@ -10,25 +10,6 @@ fancy_echo() {
   printf "\n\e[36m$fmt\e[0m\n" "$@"
 }
 
-append_to_zshrc() {
-  local text="$1" zshrc
-  local skip_new_line="${2:-0}"
-
-  if [ -w "$HOME/.zshrc.local" ]; then
-    zshrc="$HOME/.zshrc.local"
-  else
-    zshrc="$HOME/.zshrc"
-  fi
-
-  if ! grep -Fqs "$text" "$zshrc"; then
-    if [ "$skip_new_line" -eq 1 ]; then
-      printf "%s\n" "$text" >> "$zshrc"
-    else
-      printf "\n%s\n" "$text" >> "$zshrc"
-    fi
-  fi
-}
-
 find_latest_ruby() {
   rbenv install -l | grep -v - | tail -1 | sed -e 's/^ *//'
 }
@@ -61,11 +42,6 @@ if ! command -v brew >/dev/null; then
   fancy_echo "Installing Homebrew ..."
   /usr/bin/ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 
-  append_to_zshrc '# recommended by brew doctor'
-
-  # shellcheck disable=SC2016
-  append_to_zshrc 'export PATH="/usr/local/bin:$PATH"' 1
-
   export PATH="/usr/local/bin:$PATH"
 fi
 
@@ -80,6 +56,7 @@ brew bundle --file=- <<EOF
 tap "thoughtbot/formulae"
 
 # OS
+brew "autojump"
 brew "ctags"
 brew "diff-so-fancy"
 brew "git"
@@ -116,13 +93,8 @@ if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
 
-# shellcheck disable=SC2016
-append_to_zshrc 'export PATH="$HOME/.bin:$PATH"'
-
 fancy_echo "Configuring Ruby ..."
 ruby_version="$(find_latest_ruby)"
-# shellcheck disable=SC2016
-append_to_zshrc 'eval "$(rbenv init - --no-rehash)"' 1
 eval "$(rbenv init -)"
 
 if ! rbenv versions | grep -Fq "$ruby_version"; then
