@@ -63,6 +63,7 @@ brew "git"
 brew "openssl"
 brew "reattach-to-user-namespace"
 brew "rcm"
+brew "ssh-copy-id"
 brew "the_silver_searcher"
 brew "tmux"
 brew "vim"
@@ -124,3 +125,4 @@ fi
 
 fancy_echo "Installing vim plugins"
 vim -i NONE -c VundleUpdate -c quitall
+( cd ~/.vim/bundle/tern_for_vim && npm install )

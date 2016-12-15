@@ -49,6 +49,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'elzr/vim-json'
 Plugin 'kchmck/vim-coffee-script'
+Plugin 'ternjs/tern_for_vim'
 
 " Templating, markdown, etc.
 Plugin 'tpope/vim-haml'
@@ -130,8 +131,9 @@ let g:syntastic_aggregate_errors = 1
 "let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [], 'passive_filetypes': ['ruby'] }
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [], 'passive_filetypes': [] }
 let g:syntastic_ruby_checkers = ['rubocop', 'reek']
-let g:syntastic_javascript_checkers = ['eslint']
-let g:syntastic_html_checkers = ['eslint']
+let g:syntastic_javascript_checkers = ['eslint', 'flow']
+let g:syntastic_html_checkers = ['eslint', 'flow']
+let g:syntastic_javascript_flow_exe = 'flow'
 let g:syntastic_haskell_checkers = ['hlint']
 let g:syntastic_python_checkers = ['pep8']
 
@@ -178,6 +180,8 @@ autocmd FileType gitcommit setlocal spell
 
 " Syntax highlighting for es6
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
+autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>" 
+set completeopt-=preview 
 
 " Disable hiding quotes for json
 let g:vim_json_syntax_conceal = 0
