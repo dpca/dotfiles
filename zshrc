@@ -14,6 +14,10 @@ else
   export EDITOR='vim'
 fi
 
+if [ -n $TMUX ]; then
+  alias vim="TERM=screen-256color vim"
+fi
+
 export PATH="$HOME/.bin:$PATH"
 
 # Ruby

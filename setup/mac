@@ -3,11 +3,19 @@
 # Setup script inspired by thoughtbot/laptop
 # https://github.com/thoughtbot/laptop
 
+reset="\e[0m"
+red="\e[0;31m"
+green="\e[0;32m"
+yellow="\e[0;33m"
+cyan="\e[0;36m"
+white="\e[0;37m"
+
 fancy_echo() {
-  local fmt="$1"; shift
+  local color=${2:-$cyan}
+  local fmt="$color$1$reset"; shift
 
   # shellcheck disable=SC2059
-  printf "\n\e[36m$fmt\e[0m\n" "$@"
+  printf "\n$fmt\n" "$@"
 }
 
 find_latest_ruby() {
@@ -126,3 +134,10 @@ fi
 fancy_echo "Installing vim plugins"
 vim -i NONE -c VundleUpdate -c quitall
 ( cd ~/.vim/bundle/tern_for_vim && npm install )
+
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+  fancy_echo "Installing Tmux Plugin Manager"
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
+fancy_echo "Success!" $green
