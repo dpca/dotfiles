@@ -31,6 +31,9 @@ Run `rcup` after adding new files to the directory to properly symlink them.
 
 ## Settings
 
+* System
+  * Remap caps lock to control
+
 * Trackpad
   * Scroll direction: NOT NATURAL
   * Look up & data detectors: Yes
@@ -38,6 +41,10 @@ Run `rcup` after adding new files to the directory to properly symlink them.
   * Swipe between full-screen apps: 4 fingers
   * Mission control: 4 fingers
   * App Expose: Down w/ 4 fingers
+
+* Terminal
+  * Font: Meslo LG M Regular for Powerline 11pt.
+  * Use option as Meta key
 
 ## ESLint
 
