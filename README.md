@@ -27,6 +27,17 @@ Run `rcup` after adding new files to the directory to properly symlink them.
 * Docker for Mac
 * Alfred
 * Viscosity
+* [Aerial screen saver](https://github.com/JohnCoates/Aerial)
+
+## Settings
+
+* Trackpad
+  * Scroll direction: NOT NATURAL
+  * Look up & data detectors: Yes
+  * Swipe between pages: 3 fingers
+  * Swipe between full-screen apps: 4 fingers
+  * Mission control: 4 fingers
+  * App Expose: Down w/ 4 fingers
 
 ## ESLint
 
