@@ -79,7 +79,7 @@ brew "zsh"
 
 # Utilities
 brew "imagemagick"
-brew "qt"
+brew "qt5"
 brew "shellcheck"
 
 # Languages
@@ -123,7 +123,7 @@ env RCRC=$HOME/dotfiles/rcrc rcup
 if [ ! -d "$HOME/.powerline-fonts/" ]; then
   fancy_echo "Installing powerline fonts..."
   git clone https://github.com/powerline/fonts $HOME/.powerline-fonts
-  sh $HOME/powerline-fonts/install.sh
+  sh $HOME/.powerline-fonts/install.sh
 fi
 
 if [ ! -d "$HOME/.vim/bundle/Vundle.vim/" ]; then
