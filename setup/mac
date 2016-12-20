@@ -133,7 +133,6 @@ fi
 
 fancy_echo "Installing vim plugins"
 vim -i NONE -c VundleUpdate -c quitall
-( cd ~/.vim/bundle/tern_for_vim && npm install )
 
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
   fancy_echo "Installing Tmux Plugin Manager"

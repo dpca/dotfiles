@@ -49,7 +49,6 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'elzr/vim-json'
 Plugin 'kchmck/vim-coffee-script'
-Plugin 'ternjs/tern_for_vim'
 
 " Templating, markdown, etc.
 Plugin 'tpope/vim-haml'
@@ -180,8 +179,6 @@ autocmd FileType gitcommit setlocal spell
 
 " Syntax highlighting for es6
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
-autocmd FileType javascript let g:SuperTabDefaultCompletionType = "<c-x><c-o>" 
-set completeopt-=preview 
 
 " Disable hiding quotes for json
 let g:vim_json_syntax_conceal = 0
