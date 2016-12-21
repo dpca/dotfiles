@@ -165,7 +165,7 @@ map <C-k> <C-W>k
 map <C-h> <C-W>h
 map <C-l> <C-W>l
 
-map <leader>n :NERDTreeToggle<CR> " Ctrl-n for NERDTree
+map <leader>n :NERDTreeToggle<CR> " leader-n for NERDTree
 
 " Always use vertical diffs
 set diffopt+=vertical
