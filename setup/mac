@@ -150,4 +150,12 @@ if [ "$(defaults read com.apple.finder AppleShowAllFiles)" != "YES" ] ; then
   killall Finder
 fi
 
+fancy_echo "Setting up git configuration"
+git config --global core.editor vim
+git config --global core.excludesfiles ~/.gitignore_global
+git config --global core.hooksPath ~/.git_hooks
+git config --global push.default simple
+git config --global branch.master.mergeoptions --no-ff
+git config --global alias.lg "log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit --date=relative"
+
 fancy_echo "Success!" $green
