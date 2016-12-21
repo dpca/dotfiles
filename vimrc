@@ -11,7 +11,7 @@ call vundle#begin()
 Plugin 'gmarik/Vundle.vim'
 
 " Support
-Plugin 'rking/ag.vim'
+Plugin 'mileszs/ack.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
@@ -118,9 +118,12 @@ endif
 colorscheme solarized
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-set grepprg=ag\ --nogroup\ --nocolor " Use Ag over Grep
-let g:ctrlp_user_command = 'ag %s --path-to-agignore ~/.agignore -l --nocolor --hidden -g ""'
-let g:ctrlp_use_caching = 0
+if executable('ag')
+  set grepprg=ag\ --nogroup\ --nocolor " Use Ag over Grep
+  let g:ackprg = 'ag --vimgrep'
+  let g:ctrlp_user_command = 'ag %s --path-to-ignore ~/.agignore -l --nocolor -g ""'
+  let g:ctrlp_use_caching = 0
+endif
 
 " Syntastic settings
 let g:syntastic_always_populate_loc_list = 1
