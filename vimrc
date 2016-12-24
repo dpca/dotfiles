@@ -191,3 +191,6 @@ let g:jsx_ext_required = 0
 
 " Elixir
 map <leader><space> :TestFile<CR>
+
+" Cycle forward in supertab
+let g:SuperTabDefaultCompletionType = "<c-n>"
