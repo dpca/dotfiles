@@ -81,6 +81,7 @@ brew "zsh"
 brew "imagemagick"
 brew "qt5"
 brew "shellcheck"
+brew "httpie"
 
 # Languages
 brew "libyaml" # should come after openssl"
