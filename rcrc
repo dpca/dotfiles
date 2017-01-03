@@ -1,2 +1,2 @@
-EXCLUDES="README.md LICENSE setup"
+EXCLUDES="README.md LICENSE setup .env"
 DOTFILES_DIRS="$HOME/dotfiles"

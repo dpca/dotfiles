@@ -8,6 +8,9 @@ export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 source $ZSH/oh-my-zsh.sh
 
+# Load .env file if it exists
+[ -f $HOME/dotfiles/.env ] && source $HOME/dotfiles/.env
+
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vi'
 else
@@ -29,6 +32,20 @@ export PATH="$HOME/Library/Haskell/bin:$PATH"
 
 # Autojump
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
+
+# added by travis gem
+[ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
+
+# Functions
+github-clone() {
+  # Since work email is the default user.email, this makes it easier to not
+  # forget about setting my personal email for github work
+  if [ -n $HOME_EMAIL ]; then
+    git clone "$1" && cd "$(basename "$1" .git)" && git config user.email "$HOME_EMAIL"
+  else
+    echo "Oops! You need to set HOME_EMAIL in your environment"
+  fi
+}
 
 # Aliases
 alias docker-stop-all='docker stop $(docker ps -a -q)'

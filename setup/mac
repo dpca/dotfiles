@@ -152,6 +152,16 @@ if [ "$(defaults read com.apple.finder AppleShowAllFiles)" != "YES" ] ; then
 fi
 
 fancy_echo "Setting up git configuration"
+if [ -n $GIT_NAME ]; then
+  git config --global user.name "$GIT_NAME"
+else
+  fancy_echo "Skipped setting user.name - GIT_NAME not found in env" yellow
+fi
+if [ -n $GIT_EMAIL ]; then
+  git config --global user.email "$GIT_EMAIL"
+else
+  fancy_echo "Skipped setting user.email - GIT_EMAIL not found in env" yellow
+fi
 git config --global core.editor vim
 git config --global core.excludesfiles ~/.gitignore_global
 git config --global core.hooksPath ~/.git_hooks
