@@ -82,6 +82,7 @@ brew "imagemagick"
 brew "qt5"
 brew "shellcheck"
 brew "httpie"
+brew "watchman"
 
 # Languages
 brew "libyaml" # should come after openssl"
