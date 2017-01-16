@@ -17,8 +17,9 @@ else
   export EDITOR='vim'
 fi
 
+alias vim="mvim -v"
 if [ -n $TMUX ]; then
-  alias vim="TERM=screen-256color vim"
+  alias vim="TERM=screen-256color mvim -v"
 fi
 
 export PATH="$HOME/.bin:$PATH"

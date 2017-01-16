@@ -15,7 +15,6 @@ Plugin 'mileszs/ack.vim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'scrooloose/nerdcommenter'
 Plugin 'scrooloose/nerdtree'
-Plugin 'ervandew/supertab'
 Plugin 'scrooloose/syntastic'
 Plugin 'jeetsukumaran/vim-buffergator'
 Plugin 'terryma/vim-multiple-cursors'
@@ -27,6 +26,7 @@ Plugin 'mattn/emmet-vim'
 Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'mbbill/undotree'
 Plugin 'janko-m/vim-test'
+Plugin 'valloric/youcompleteme'
 
 " Display
 Plugin 'vim-airline/vim-airline'
@@ -49,6 +49,7 @@ Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'elzr/vim-json'
 Plugin 'kchmck/vim-coffee-script'
+Plugin 'flowtype/vim-flow'
 
 " Templating, markdown, etc.
 Plugin 'tpope/vim-haml'
@@ -180,8 +181,9 @@ nmap <leader>h :%s/:\([^=,'"]*\) =>/\1:/gc<CR>
 autocmd Bufread,BufNewFile *.md setlocal spell
 autocmd FileType gitcommit setlocal spell
 
-" Syntax highlighting for es6
+" Syntax highlighting for es6 and flow
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
+let g:javascript_plugin_flow = 1
 
 " Disable hiding quotes for json
 let g:vim_json_syntax_conceal = 0
@@ -190,7 +192,13 @@ let g:vim_json_syntax_conceal = 0
 let g:jsx_ext_required = 0
 
 " Elixir
-map <leader><space> :TestFile<CR>
+autocmd FileType elixir map <leader><space> :TestFile<CR>
 
 " Cycle forward in supertab
 let g:SuperTabDefaultCompletionType = "<c-n>"
+
+" Disable flow type checking on save
+let g:flow#enable = 0
+autocmd FileType javascript map <leader><space> :FlowType<CR>
+
+let g:ycm_collect_identifiers_from_tags_files = 1

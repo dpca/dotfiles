@@ -31,6 +31,10 @@ gem_install_or_update() {
   fi
 }
 
+npm_install_with_peer_deps() {
+  npm info "$1@latest" peerDependencies --json | command sed 's/[\{\},]//g ; s/: /@/g' | xargs npm install -g "$1@latest"
+}
+
 # Stop execution if a command errors
 set -e
 
@@ -75,7 +79,9 @@ brew "ssh-copy-id"
 brew "the_silver_searcher"
 brew "tmux"
 brew "vim"
+brew "macvim"
 brew "zsh"
+brew "cmake"
 
 # Utilities
 brew "imagemagick"
@@ -104,7 +110,7 @@ if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
 
-fancy_echo "Configuring Ruby ..."
+fancy_echo "Configuring Ruby..."
 ruby_version="$(find_latest_ruby)"
 eval "$(rbenv init -)"
 
@@ -116,8 +122,14 @@ rbenv global "$ruby_version"
 rbenv shell "$ruby_version"
 gem update --system
 gem_install_or_update 'bundler'
+gem_install_or_update 'rubocop'
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
+
+fancy_echo "Installing node modules..."
+npm install -g eslint create-react-app eslint-plugin-html flow-bin
+npm_install_with_peer_deps eslint-config-airbnb
+npm_install_with_peer_deps eslint-config-react-app
 
 fancy_echo "Installing dotfiles..."
 env RCRC=$HOME/dotfiles/rcrc rcup
@@ -128,9 +140,11 @@ if [ ! -d "$HOME/.powerline-fonts/" ]; then
   sh $HOME/.powerline-fonts/install.sh
 fi
 
+first_vim_install=false
 if [ ! -d "$HOME/.vim/bundle/Vundle.vim/" ]; then
   fancy_echo "Installing Vundle..."
   git clone https://github.com/VundleVim/Vundle.vim.git ~/.vim/bundle/Vundle.vim
+  first_vim_install=true
 fi
 
 if [ ! -d "$HOME/.vim/undo/" ]; then
@@ -140,6 +154,11 @@ fi
 
 fancy_echo "Installing vim plugins"
 vim -i NONE -c VundleUpdate -c quitall
+
+if [ "$first_vim_install" = true ]; then
+  fancy_echo "Compiling YouCompleteMe..."
+  ( cd $HOME/.vim/bundle/YouCompleteMe && ./install.py --tern-completer )
+fi
 
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
   fancy_echo "Installing Tmux Plugin Manager"
@@ -153,12 +172,12 @@ if [ "$(defaults read com.apple.finder AppleShowAllFiles)" != "YES" ] ; then
 fi
 
 fancy_echo "Setting up git configuration"
-if [ -n $GIT_NAME ]; then
+if [ -n "$GIT_NAME" ]; then
   git config --global user.name "$GIT_NAME"
 else
   fancy_echo "Skipped setting user.name - GIT_NAME not found in env" yellow
 fi
-if [ -n $GIT_EMAIL ]; then
+if [ -n "$GIT_EMAIL" ]; then
   git config --global user.email "$GIT_EMAIL"
 else
   fancy_echo "Skipped setting user.email - GIT_EMAIL not found in env" yellow
