@@ -2,7 +2,7 @@
 export ZSH=$HOME/.oh-my-zsh
 
 ZSH_THEME="agnoster"
-plugins=(git osx brew vagrant docker docker-compose npm mix)
+plugins=(git osx brew tmux docker docker-compose rbenv npm yarn mix)
 
 export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
 
