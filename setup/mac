@@ -82,6 +82,8 @@ brew "vim"
 brew "macvim"
 brew "zsh"
 brew "cmake"
+cask "qlmarkdown"
+cask "qlstephen"
 
 # Utilities
 brew "imagemagick"
