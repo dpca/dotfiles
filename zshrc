@@ -48,6 +48,10 @@ github-clone() {
   fi
 }
 
+git-delete-merged() {
+  git branch --merged | egrep -v "(^\*|master)" | xargs git branch -d
+}
+
 # Aliases
 alias docker-stop-all='docker stop $(docker ps -a -q)'
 alias docker-stop-running='docker stop $(docker ps -q)'
