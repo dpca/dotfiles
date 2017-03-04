@@ -1,0 +1,37 @@
+tap "thoughtbot/formulae"
+
+# OS
+brew "autojump"
+brew "ctags"
+brew "diff-so-fancy"
+brew "git"
+brew "openssl"
+brew "reattach-to-user-namespace"
+brew "rcm"
+brew "ssh-copy-id"
+brew "the_silver_searcher"
+brew "tmux"
+brew "vim"
+brew "macvim"
+brew "zsh"
+brew "cmake"
+brew "htop"
+cask "qlmarkdown"
+cask "qlstephen"
+
+# Utilities
+brew "imagemagick"
+brew "qt5"
+brew "shellcheck"
+brew "httpie"
+brew "watchman"
+
+# Languages
+brew "libyaml" # should come after openssl"
+brew "rbenv"
+brew "ruby-build"
+brew "node"
+brew "yarn"
+brew "python"
+brew "elixir"
+cask "haskell-platform"

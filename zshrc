@@ -25,11 +25,7 @@ fi
 export PATH="$HOME/.bin:$PATH"
 
 # Ruby
-export PATH="$HOME/.rbenv/bin:$PATH"
 eval "$(rbenv init - zsh --no-rehash)"
-
-# Haskell
-export PATH="$HOME/Library/Haskell/bin:$PATH"
 
 # Autojump
 [[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
