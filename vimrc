@@ -16,7 +16,7 @@ call plug#begin('~/.vim/bundle')
 Plug 'mileszs/ack.vim'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/syntastic'
 Plug 'jeetsukumaran/vim-buffergator'
 Plug 'terryma/vim-multiple-cursors'
@@ -28,9 +28,13 @@ Plug 'mattn/emmet-vim'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'mbbill/undotree'
 Plug 'janko-m/vim-test'
-Plug 'valloric/youcompleteme'
 Plug 'mtth/scratch.vim'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'junegunn/vim-easy-align'
+Plug 'SirVer/ultisnips'
+Plug 'honza/vim-snippets'
+Plug 'ervandew/supertab'
+Plug 'valloric/youcompleteme', { 'do': './install.py' }
 
 " Display
 Plug 'vim-airline/vim-airline'
@@ -44,29 +48,29 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 " Ruby
-Plug 'vim-ruby/vim-ruby'
-Plug 'tpope/vim-rails'
-Plug 'vim-scripts/ruby-matchit'
+Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
+Plug 'tpope/vim-rails', { 'for': 'ruby' }
+Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
 
 " Javascript
-Plug 'pangloss/vim-javascript'
-Plug 'mxw/vim-jsx'
-Plug 'elzr/vim-json'
-Plug 'kchmck/vim-coffee-script'
-Plug 'flowtype/vim-flow'
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
+Plug 'mxw/vim-jsx', { 'for': 'javascript' }
+Plug 'elzr/vim-json', { 'for': 'javascript' }
+Plug 'kchmck/vim-coffee-script', { 'for': 'javascript' }
+Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 
 " Templating, markdown, etc.
-Plug 'tpope/vim-haml'
-Plug 'plasticboy/vim-markdown'
+Plug 'tpope/vim-haml', { 'for': 'haml' }
+Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
 " Haskell
-Plug 'neovimhaskell/haskell-vim'
+Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
 
 " Elm
-Plug 'lambdatoast/elm.vim'
+Plug 'lambdatoast/elm.vim', { 'for': 'elm' }
 
 " Elixir
-Plug 'elixir-lang/vim-elixir'
+Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -91,6 +95,16 @@ set shiftround
 set expandtab
 
 set list listchars=tab:»·,trail:·,nbsp:· " Trailing whitespace
+
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" better key bindings for UltiSnipsExpandTrigger
+let g:UltiSnipsExpandTrigger = "<enter>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Show column at 80
 set colorcolumn=80
@@ -176,6 +190,12 @@ set diffopt+=vertical
 
 " Switch between the last two files
 nnoremap <leader><leader> <c-^>
+
+" Start interactive EasyAlign in visual mode (e.g. vipga)
+xmap ga <Plug>(EasyAlign)
+
+" Start interactive EasyAlign for a motion/text object (e.g. gaip)
+nmap ga <Plug>(EasyAlign)
 
 " Switch from old to new ruby hash syntax
 nmap <leader>h :%s/:\([^=,'"]*\) =>/\1:/gc<CR>
