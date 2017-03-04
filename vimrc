@@ -1,74 +1,75 @@
 " Vim settings
 set nocompatible
 
-" Use Vundle for bundle management https://github.com/gmarik/Vundle.vim
-" set the runtime path to include Vundle and initialize
-filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
+" Use vim-plug for bundle management https://github.com/junegunn/vim-plug
 
-" let Vundle manage Vundle, required
-Plugin 'gmarik/Vundle.vim'
+" Automatically install vim-plug
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+        \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+  autocmd VimEnter * PlugInstall --sync | source $MYVIMRC
+endif
+
+call plug#begin('~/.vim/bundle')
 
 " Support
-Plugin 'mileszs/ack.vim'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
-Plugin 'jeetsukumaran/vim-buffergator'
-Plugin 'terryma/vim-multiple-cursors'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-unimpaired'
-Plugin 'tpope/vim-endwise.git'
-Plugin 'vim-scripts/matchit.zip'
-Plugin 'mattn/emmet-vim'
-Plugin 'christoomey/vim-tmux-navigator'
-Plugin 'mbbill/undotree'
-Plugin 'janko-m/vim-test'
-Plugin 'valloric/youcompleteme'
-Plugin 'mtth/scratch.vim'
-Plugin 'ludovicchabant/vim-gutentags'
+Plug 'mileszs/ack.vim'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree'
+Plug 'scrooloose/syntastic'
+Plug 'jeetsukumaran/vim-buffergator'
+Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-unimpaired'
+Plug 'tpope/vim-endwise'
+Plug 'vim-scripts/matchit.zip'
+Plug 'mattn/emmet-vim'
+Plug 'christoomey/vim-tmux-navigator'
+Plug 'mbbill/undotree'
+Plug 'janko-m/vim-test'
+Plug 'valloric/youcompleteme'
+Plug 'mtth/scratch.vim'
+Plug 'ludovicchabant/vim-gutentags'
 
 " Display
-Plugin 'vim-airline/vim-airline'
-Plugin 'vim-airline/vim-airline-themes'
-Plugin 'altercation/vim-colors-solarized'
-Plugin 'bronson/vim-trailing-whitespace'
-Plugin 'flazz/vim-colorschemes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
+Plug 'altercation/vim-colors-solarized'
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'flazz/vim-colorschemes'
 
 " Git
-Plugin 'tpope/vim-fugitive'
-Plugin 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
 
 " Ruby
-Plugin 'vim-ruby/vim-ruby'
-Plugin 'tpope/vim-rails'
-Plugin 'vim-scripts/ruby-matchit'
+Plug 'vim-ruby/vim-ruby'
+Plug 'tpope/vim-rails'
+Plug 'vim-scripts/ruby-matchit'
 
 " Javascript
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
-Plugin 'elzr/vim-json'
-Plugin 'kchmck/vim-coffee-script'
-Plugin 'flowtype/vim-flow'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
+Plug 'elzr/vim-json'
+Plug 'kchmck/vim-coffee-script'
+Plug 'flowtype/vim-flow'
 
 " Templating, markdown, etc.
-Plugin 'tpope/vim-haml'
-Plugin 'plasticboy/vim-markdown'
+Plug 'tpope/vim-haml'
+Plug 'plasticboy/vim-markdown'
 
 " Haskell
-Plugin 'neovimhaskell/haskell-vim'
+Plug 'neovimhaskell/haskell-vim'
 
 " Elm
-Plugin 'lambdatoast/elm.vim'
+Plug 'lambdatoast/elm.vim'
 
 " Elixir
-Plugin 'elixir-lang/vim-elixir'
+Plug 'elixir-lang/vim-elixir'
 
 " All of your Plugins must be added before the following line
-call vundle#end()            " required
-filetype plugin indent on    " required
+call plug#end()
 
 let mapleader = ";" " Leader
 
