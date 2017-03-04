@@ -82,6 +82,7 @@ brew "vim"
 brew "macvim"
 brew "zsh"
 brew "cmake"
+brew "htop"
 cask "qlmarkdown"
 cask "qlstephen"
 

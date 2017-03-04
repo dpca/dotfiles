@@ -27,6 +27,8 @@ Plugin 'christoomey/vim-tmux-navigator'
 Plugin 'mbbill/undotree'
 Plugin 'janko-m/vim-test'
 Plugin 'valloric/youcompleteme'
+Plugin 'mtth/scratch.vim'
+Plugin 'ludovicchabant/vim-gutentags'
 
 " Display
 Plugin 'vim-airline/vim-airline'
@@ -194,11 +196,12 @@ let g:jsx_ext_required = 0
 " Elixir
 autocmd FileType elixir map <leader><space> :TestFile<CR>
 
-" Cycle forward in supertab
-let g:SuperTabDefaultCompletionType = "<c-n>"
-
 " Disable flow type checking on save
 let g:flow#enable = 0
 autocmd FileType javascript map <leader><space> :FlowType<CR>
 
 let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_key_invoke_completion = '<leader><tab>'
+
+" Python
+au FileType python setl sw=2 sts=2 et
