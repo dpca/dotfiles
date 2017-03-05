@@ -13,35 +13,35 @@ endif
 call plug#begin('~/.vim/bundle')
 
 " Support
-Plug 'mileszs/ack.vim'
+Plug 'christoomey/vim-tmux-navigator'
 Plug 'ctrlpvim/ctrlp.vim'
+Plug 'ervandew/supertab'
+Plug 'honza/vim-snippets'
+Plug 'janko-m/vim-test'
+Plug 'jeetsukumaran/vim-buffergator'
+Plug 'junegunn/vim-easy-align'
+Plug 'ludovicchabant/vim-gutentags'
+Plug 'mattn/emmet-vim'
+Plug 'mbbill/undotree'
+Plug 'mileszs/ack.vim'
+Plug 'mtth/scratch.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/syntastic'
-Plug 'jeetsukumaran/vim-buffergator'
+Plug 'SirVer/ultisnips'
 Plug 'terryma/vim-multiple-cursors'
+Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'tpope/vim-endwise'
-Plug 'vim-scripts/matchit.zip'
-Plug 'mattn/emmet-vim'
-Plug 'christoomey/vim-tmux-navigator'
-Plug 'mbbill/undotree'
-Plug 'janko-m/vim-test'
-Plug 'mtth/scratch.vim'
-Plug 'ludovicchabant/vim-gutentags'
-Plug 'junegunn/vim-easy-align'
-Plug 'SirVer/ultisnips'
-Plug 'honza/vim-snippets'
-Plug 'ervandew/supertab'
 Plug 'valloric/youcompleteme', { 'do': './install.py' }
+Plug 'vim-scripts/matchit.zip'
 
 " Display
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'altercation/vim-colors-solarized'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'flazz/vim-colorschemes'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 " Git
 Plug 'tpope/vim-fugitive'
@@ -54,14 +54,14 @@ Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
 
 " Javascript
 Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 Plug 'elzr/vim-json', { 'for': 'javascript' }
-Plug 'kchmck/vim-coffee-script', { 'for': 'javascript' }
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
+Plug 'kchmck/vim-coffee-script', { 'for': 'javascript' }
+Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 
 " Templating, markdown, etc.
-Plug 'tpope/vim-haml', { 'for': 'haml' }
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'tpope/vim-haml', { 'for': 'haml' }
 
 " Haskell
 Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
@@ -78,15 +78,18 @@ call plug#end()
 let mapleader = ";" " Leader
 
 set backspace=2   " Make backspace behave like in other programs
-set nobackup
-set nowritebackup
-set noswapfile
-set ruler
-set showcmd
+set colorcolumn=80 " Show column at 80
+set diffopt+=vertical " Always use vertical diffs
 set laststatus=2
+set list listchars=tab:»·,trail:·,nbsp:· " Trailing whitespace
+set nobackup
+set noswapfile
+set nowritebackup
 set number
 set relativenumber
+set ruler
 set shortmess=atI
+set showcmd
 
 " Tab settings
 set tabstop=2
@@ -94,24 +97,11 @@ set shiftwidth=2
 set shiftround
 set expandtab
 
-set list listchars=tab:»·,trail:·,nbsp:· " Trailing whitespace
-
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" better key bindings for UltiSnipsExpandTrigger
-let g:UltiSnipsExpandTrigger = "<leader><tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
-" Show column at 80
-set colorcolumn=80
-
-" Tag completion using excuberant ctags
-set tags=tags;/
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip*/.git/*,*/.bundle/*,*/coverage/*,*/public/*,*/log/*,*/vendor/*,*/doc/*,*.o,*.obj,.git,node_modules/**,bower_components/**,**/node_modules/**,_build/**,deps/**,*.beam
+" Persistent undo
+set undofile
+set undodir=~/.vim/undo
+set undolevels=1000
+set undoreload=10000
 
 " Search settings
 set incsearch
@@ -119,13 +109,41 @@ set hlsearch
 set ignorecase
 set infercase
 set smartcase
-nmap <leader>hs :let @/=""<CR>
 
-" Persistent undo
-set undofile
-set undodir=~/.vim/undo
-set undolevels=1000
-set undoreload=10000
+" Tag completion using excuberant ctags
+set tags=tags;/
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip*/.git/*,*/.bundle/*,*/coverage/*,*/public/*,*/log/*,*/vendor/*,*/doc/*,*.o,*.obj,.git,node_modules/**,bower_components/**,**/node_modules/**,_build/**,deps/**,*.beam
+
+" Move around windows with Ctrl and movement keys
+map <C-j> <C-W>j
+map <C-k> <C-W>k
+map <C-h> <C-W>h
+map <C-l> <C-W>l
+
+" Speedier viewport scrolling
+nnoremap <C-e> 3<C-e>
+nnoremap <C-y> 3<C-y>
+
+nmap <leader>hs :let @/=""<CR>
+map <leader>n :NERDTreeToggle<CR> " leader-n for NERDTree
+nnoremap <leader><leader> <c-^> " Switch between the last two files
+
+" EasyAlign settings
+xmap ga <Plug>(EasyAlign)
+nmap ga <Plug>(EasyAlign)
+
+" YCM settings
+let g:ycm_collect_identifiers_from_tags_files = 1
+let g:ycm_key_invoke_completion = '<leader><tab>'
+" make YCM compatible with UltiSnips (using supertab)
+let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
+let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
+" UltiSnips settings
+let g:UltiSnipsExpandTrigger = "<leader><tab>"
+let g:UltiSnipsJumpForwardTrigger = "<tab>"
+let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
 
 " Solarized color scheme
 syntax enable
@@ -148,7 +166,6 @@ let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_check_on_open = 1
 let g:syntastic_check_on_wq = 0
 let g:syntastic_aggregate_errors = 1
-"let g:syntastic_mode_map = { 'mode': 'active', 'active_filetypes': [], 'passive_filetypes': ['ruby'] }
 let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [], 'passive_filetypes': [] }
 let g:syntastic_ruby_checkers = ['rubocop', 'reek']
 let g:syntastic_javascript_checkers = ['eslint', 'flow']
@@ -177,52 +194,23 @@ let g:buffergator_viewport_split_policy = 'R'
 " Gitgutter settings
 let g:gitgutter_max_signs = 10000
 
-" Move around windows with Ctrl and movement keys
-map <C-j> <C-W>j
-map <C-k> <C-W>k
-map <C-h> <C-W>h
-map <C-l> <C-W>l
-
-map <leader>n :NERDTreeToggle<CR> " leader-n for NERDTree
-
-" Always use vertical diffs
-set diffopt+=vertical
-
-" Switch between the last two files
-nnoremap <leader><leader> <c-^>
-
-" Start interactive EasyAlign in visual mode (e.g. vipga)
-xmap ga <Plug>(EasyAlign)
-
-" Start interactive EasyAlign for a motion/text object (e.g. gaip)
-nmap ga <Plug>(EasyAlign)
-
-" Switch from old to new ruby hash syntax
-nmap <leader>h :%s/:\([^=,'"]*\) =>/\1:/gc<CR>
-
 " Turn on spell checking for certain files
 autocmd Bufread,BufNewFile *.md setlocal spell
 autocmd FileType gitcommit setlocal spell
 
-" Syntax highlighting for es6 and flow
+" Javascript settings
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
 let g:javascript_plugin_flow = 1
-
-" Disable hiding quotes for json
-let g:vim_json_syntax_conceal = 0
-
-" JSX in js files
-let g:jsx_ext_required = 0
-
-" Elixir
-autocmd FileType elixir map <leader><space> :TestFile<CR>
-
-" Disable flow type checking on save
-let g:flow#enable = 0
+let g:jsx_ext_required = 0 " JSX in js files
+let g:vim_json_syntax_conceal = 0 " Disable hiding quotes for json
+let g:flow#enable = 0 " Disable flow type checking on save
 autocmd FileType javascript map <leader><space> :FlowType<CR>
 
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_key_invoke_completion = '<leader><tab>'
+" Elixir settings
+autocmd FileType elixir map <leader><space> :TestFile<CR>
 
-" Python
+" Python settings
 au FileType python setl sw=2 sts=2 et
+
+" Ruby settings
+nmap <leader>h :%s/:\([^=,'"]*\) =>/\1:/gc<CR>
