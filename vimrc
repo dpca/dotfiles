@@ -26,7 +26,7 @@ Plug 'mileszs/ack.vim'
 Plug 'mtth/scratch.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'scrooloose/syntastic'
+Plug 'w0rp/ale'
 Plug 'SirVer/ultisnips'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-endwise'
@@ -160,18 +160,11 @@ if executable('ag')
   let g:ctrlp_use_caching = 0
 endif
 
-" Syntastic settings
-let g:syntastic_always_populate_loc_list = 1
-let g:syntastic_check_on_open = 1
-let g:syntastic_check_on_wq = 0
-let g:syntastic_aggregate_errors = 1
-let g:syntastic_mode_map = { 'mode': 'passive', 'active_filetypes': [], 'passive_filetypes': [] }
-let g:syntastic_ruby_checkers = ['rubocop', 'reek']
-let g:syntastic_javascript_checkers = ['eslint', 'flow']
-let g:syntastic_html_checkers = ['eslint', 'flow']
-let g:syntastic_javascript_flow_exe = 'flow'
-let g:syntastic_haskell_checkers = ['hlint']
-let g:syntastic_python_checkers = ['pep8']
+let g:ale_linters = {
+\ 'javascript': ['eslint', 'flow'],
+\ 'ruby': ['rubocop', 'reek'],
+\}
+let g:ale_javascript_eslint_use_global = 1
 
 " Airline settings
 set guifont=Meslo\ LG\ M\ for\ Powerline
