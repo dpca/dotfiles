@@ -61,6 +61,10 @@ npm_install_with_peer_deps() {
   npm info "$1@latest" peerDependencies --json | command sed 's/[\{\},]//g ; s/: /@/g' | xargs npm install -g "$1@latest"
 }
 
+npm_list_global() {
+  npm list -g --depth=0
+}
+
 # Aliases
 alias docker-stop-all='docker stop $(docker ps -a -q)'
 alias docker-stop-running='docker stop $(docker ps -q)'
