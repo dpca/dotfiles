@@ -34,6 +34,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'valloric/youcompleteme', { 'do': './install.py' }
 Plug 'vim-scripts/matchit.zip'
+Plug 'jiangmiao/auto-pairs'
 
 " Display
 Plug 'altercation/vim-colors-solarized'
@@ -57,6 +58,7 @@ Plug 'elzr/vim-json', { 'for': 'javascript' }
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': 'javascript' }
+Plug 'alvan/vim-closetag', { 'for': ['javascript', 'html'] }
 
 " Templating, markdown, etc.
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -196,6 +198,7 @@ let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0 " JSX in js files
 let g:vim_json_syntax_conceal = 0 " Disable hiding quotes for json
 let g:flow#enable = 0 " Disable flow type checking on save
+let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php, *.jsx"
 autocmd FileType javascript map <leader><space> :FlowType<CR>
 "autocmd FileType javascript set formatprg=prettier\ --stdin\ --parser\ flow\ --single-quote\ --trailing-comma\ es5
 
