@@ -165,6 +165,7 @@ let g:ale_linters = {
 \ 'ruby': ['rubocop', 'reek'],
 \}
 let g:ale_javascript_eslint_use_global = 1
+let g:ale_lint_delay = 2000
 
 " Airline settings
 set guifont=Meslo\ LG\ M\ for\ Powerline
