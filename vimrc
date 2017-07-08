@@ -34,7 +34,6 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'valloric/youcompleteme', { 'do': './install.py' }
 Plug 'vim-scripts/matchit.zip'
-Plug 'jiangmiao/auto-pairs'
 
 " Display
 Plug 'altercation/vim-colors-solarized'
@@ -58,7 +57,6 @@ Plug 'elzr/vim-json', { 'for': 'javascript' }
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 Plug 'kchmck/vim-coffee-script', { 'for': 'javascript' }
 Plug 'mxw/vim-jsx', { 'for': 'javascript' }
-Plug 'alvan/vim-closetag', { 'for': ['javascript', 'html'] }
 
 " Templating, markdown, etc.
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
