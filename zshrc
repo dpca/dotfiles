@@ -45,7 +45,10 @@ github-clone() {
 }
 
 git-delete-merged() {
+  # Delete local merged branches
   git branch --merged | egrep -v "(^\*|master)" | xargs git branch -d
+  # Delete references to remote branches that no longer exist
+  git remote prune origin
 }
 
 gem_install_or_update() {
