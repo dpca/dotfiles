@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+CHROME_DIR="${HOME}/Chrome"
+CHROME_BETA="${CHROME_DIR}/Google Chrome Beta.app"
+
+if [ ! -d "$CHROME_BETA" ]; then
+  echo "Chrome beta not installed at '${CHROME_BETA}'"
+  exit 1
+fi
+
+"${CHROME_BETA}/Contents/MacOS/Google Chrome" --user-data-dir="${CHROME_DIR}/chromebetaprofile"

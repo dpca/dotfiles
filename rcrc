@@ -1,2 +1,3 @@
 EXCLUDES="README.md LICENSE setup .env"
 DOTFILES_DIRS="$HOME/dotfiles"
+SYMLINK_DIRS="bin"
