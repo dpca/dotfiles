@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+npm info "$1@latest" peerDependencies --json | command sed 's/[\{\},]//g ; s/: /@/g' | xargs npm install -g "$1@latest"

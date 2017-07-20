@@ -33,41 +33,6 @@ eval "$(rbenv init - zsh --no-rehash)"
 # added by travis gem
 [ -f $HOME/.travis/travis.sh ] && source $HOME/.travis/travis.sh
 
-# Functions
-github-clone() {
-  # Since work email is the default user.email, this makes it easier to not
-  # forget about setting my personal email for github work
-  if [ -n $HOME_EMAIL ]; then
-    git clone "$1" && cd "$(basename "$1" .git)" && git config user.email "$HOME_EMAIL"
-  else
-    echo "Oops! You need to set HOME_EMAIL in your environment"
-  fi
-}
-
-git-delete-merged() {
-  # Delete local merged branches
-  git branch --merged | egrep -v "(^\*|master)" | xargs git branch -d
-  # Delete references to remote branches that no longer exist
-  git remote prune origin
-}
-
-gem_install_or_update() {
-  if gem list "$1" --installed > /dev/null; then
-    gem update "$@"
-  else
-    gem install "$@"
-    rbenv rehash
-  fi
-}
-
-npm_install_with_peer_deps() {
-  npm info "$1@latest" peerDependencies --json | command sed 's/[\{\},]//g ; s/: /@/g' | xargs npm install -g "$1@latest"
-}
-
-npm_list_global() {
-  npm list -g --depth=0
-}
-
 # Aliases
 alias docker-stop-all='docker stop $(docker ps -a -q)'
 alias docker-stop-running='docker stop $(docker ps -q)'

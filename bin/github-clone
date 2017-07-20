@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+# Since work email is the default user.email, this makes it easier to not
+# forget about setting my personal email for github work
+if [ -n "$HOME_EMAIL" ]; then
+  git clone "$1" && cd "$(basename "$1" .git)" && git config user.email "$HOME_EMAIL"
+else
+  echo "Oops! You need to set HOME_EMAIL in your environment"
+fi
