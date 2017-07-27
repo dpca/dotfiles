@@ -2,7 +2,7 @@
   editor = vim
   excludesfile = ~/.gitignore_global
   hooksPath = ~/.git_hooks
-  pager = diff-highlight | diff-so-fancy | less -r
+  pager = diff-so-fancy | less -c
 
 [color "status"]
   untracked = cyan
