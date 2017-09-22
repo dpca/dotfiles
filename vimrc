@@ -170,7 +170,11 @@ let g:ale_linters = {
 \ 'javascript': ['eslint', 'flow'],
 \ 'ruby': ['rubocop', 'reek'],
 \}
+let g:ale_fixers = {
+\ 'javascript': ['prettier'],
+\}
 let g:ale_javascript_eslint_use_global = 1
+let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
 let g:ale_lint_delay = 2000
 
 " Airline settings
