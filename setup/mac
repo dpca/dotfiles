@@ -41,6 +41,16 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 HOMEBREW_PREFIX="/usr/local"
 
+# oh-my-zsh
+if [ ! -d "$HOME/.oh-my-zsh/" ]; then
+  fancy_echo "Installing oh-my-zsh..."
+  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
+fi
+
+if [ ! -d "$HOME/.bin/" ]; then
+  mkdir "$HOME/.bin"
+fi
+
 if [ -d "$HOMEBREW_PREFIX" ]; then
   if ! [ -r "$HOMEBREW_PREFIX" ]; then
     sudo chown -R "$LOGNAME:admin" /usr/local
@@ -67,15 +77,8 @@ fancy_echo "Updating Homebrew formulae ..."
 brew update
 brew bundle --file=$DIR/../Brewfile
 
-# oh-my-zsh
-if [ ! -d "$HOME/.oh-my-zsh/" ]; then
-  fancy_echo "Installing oh-my-zsh..."
-  sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
-fi
-
-if [ ! -d "$HOME/.bin/" ]; then
-  mkdir "$HOME/.bin"
-fi
+# Install useful key bindings and fuzzy completion for fzf
+$(brew --prefix)/opt/fzf/install
 
 fancy_echo "Configuring Ruby..."
 ruby_version="$(find_latest_ruby)"

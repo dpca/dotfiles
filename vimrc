@@ -19,7 +19,8 @@ call plug#begin('~/.vim/bundle')
 
 " Support
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'ctrlpvim/ctrlp.vim'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'ervandew/supertab'
 Plug 'honza/vim-snippets'
 Plug 'janko-m/vim-test'
@@ -162,9 +163,9 @@ colorscheme solarized
 if executable('ag')
   set grepprg=ag\ --nogroup\ --nocolor " Use Ag over Grep
   let g:ackprg = 'ag --vimgrep'
-  let g:ctrlp_user_command = 'ag %s --path-to-ignore ~/.agignore -l --hidden --nocolor -g ""'
-  let g:ctrlp_use_caching = 0
 endif
+
+nnoremap <C-p> :FZF<CR>
 
 let g:ale_linters = {
 \ 'javascript': ['eslint', 'flow'],

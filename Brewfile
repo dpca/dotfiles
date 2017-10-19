@@ -17,6 +17,7 @@ brew "neovim"
 brew "zsh"
 brew "cmake"
 brew "htop"
+brew "fzf"
 cask "qlmarkdown"
 cask "qlstephen"
 
