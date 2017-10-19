@@ -41,6 +41,8 @@ Plug 'tpope/vim-unimpaired'
 Plug 'valloric/youcompleteme', { 'do': './install.py' }
 Plug 'vim-scripts/matchit.zip'
 Plug 'sheerun/vim-polyglot'
+Plug 'tpope/vim-repeat'
+Plug 'docunext/closetag.vim'
 
 " Display
 Plug 'altercation/vim-colors-solarized'
