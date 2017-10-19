@@ -40,6 +40,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'valloric/youcompleteme', { 'do': './install.py' }
 Plug 'vim-scripts/matchit.zip'
+Plug 'sheerun/vim-polyglot'
 
 " Display
 Plug 'altercation/vim-colors-solarized'
@@ -53,29 +54,14 @@ Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
 
 " Ruby
-Plug 'vim-ruby/vim-ruby', { 'for': 'ruby' }
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
 
 " Javascript
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
-Plug 'elzr/vim-json', { 'for': 'javascript' }
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
-Plug 'kchmck/vim-coffee-script', { 'for': 'javascript' }
-Plug 'mxw/vim-jsx', { 'for': 'javascript' }
 
 " Templating, markdown, etc.
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
-Plug 'tpope/vim-haml', { 'for': 'haml' }
-
-" Haskell
-Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
-
-" Elm
-Plug 'lambdatoast/elm.vim', { 'for': 'elm' }
-
-" Elixir
-Plug 'elixir-lang/vim-elixir', { 'for': 'elixir' }
 
 " All of your Plugins must be added before the following line
 call plug#end()
