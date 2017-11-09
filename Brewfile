@@ -27,6 +27,7 @@ brew "qt5"
 brew "shellcheck"
 brew "httpie"
 brew "watchman"
+brew "jq"
 
 # Languages
 brew "libyaml" # should come after openssl"
