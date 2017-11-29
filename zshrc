@@ -39,3 +39,4 @@ export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
 
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
+export PATH="/usr/local/opt/openssl/bin:$PATH"
