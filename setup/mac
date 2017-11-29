@@ -133,4 +133,9 @@ if [ "$(defaults read com.apple.finder AppleShowAllFiles)" != "YES" ] ; then
   killall Finder
 fi
 
+if [ "$(defaults read com.apple.desktopservices DSDontWriteNetworkStores)" != "1" ] ; then
+  fancy_echo "Disabling storage of invisible files on network stores"
+  defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
+fi
+
 fancy_echo "Success!" $green
