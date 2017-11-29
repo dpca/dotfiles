@@ -38,11 +38,17 @@ Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
-Plug 'valloric/youcompleteme', { 'do': './install.py' }
 Plug 'vim-scripts/matchit.zip'
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-repeat'
 Plug 'docunext/closetag.vim'
+Plug 'majutsushi/tagbar'
+
+" Completion
+Plug 'roxma/nvim-completion-manager'
+Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
+Plug 'roxma/ncm-flow'
+Plug 'roxma/ncm-rct-complete'
 
 " Display
 Plug 'altercation/vim-colors-solarized'
@@ -125,14 +131,6 @@ nnoremap <leader><leader> <c-^> " Switch between the last two files
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-" YCM settings
-let g:ycm_collect_identifiers_from_tags_files = 1
-let g:ycm_key_invoke_completion = '<leader><tab>'
-" make YCM compatible with UltiSnips (using supertab)
-let g:ycm_key_list_select_completion = ['<C-n>', '<Down>']
-let g:ycm_key_list_previous_completion = ['<C-p>', '<Up>']
-let g:SuperTabDefaultCompletionType = '<C-n>'
-
 " UltiSnips settings
 let g:UltiSnipsExpandTrigger = "<leader><tab>"
 let g:UltiSnipsJumpForwardTrigger = "<tab>"
@@ -185,6 +183,9 @@ let g:buffergator_viewport_split_policy = 'R'
 
 " Gitgutter settings
 let g:gitgutter_max_signs = 10000
+
+" Tagbar
+nmap <F8> :TagbarToggle<CR>
 
 " Turn on spell checking for certain files
 autocmd Bufread,BufNewFile *.md setlocal spell

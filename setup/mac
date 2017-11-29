@@ -105,7 +105,8 @@ npm_install_with_peer_deps eslint-config-react-app
 
 fancy_echo "Installing python libraries"
 pip2 install --user --upgrade neovim virtualenv
-pip3 install --user --upgrade neovim
+# for nvim-completion-manager
+pip3 install --user --upgrade neovim jedi psutil setproctitle
 
 fancy_echo "Installing dotfiles..."
 env RCRC=$HOME/dotfiles/rcrc rcup
