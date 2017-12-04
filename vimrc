@@ -153,6 +153,8 @@ endif
 
 nnoremap <C-p> :FZF<CR>
 
+let g:SuperTabDefaultCompletionType = '<C-n>'
+
 let g:ale_linters = {
 \ 'javascript': ['eslint', 'flow'],
 \ 'ruby': ['rubocop', 'reek'],
