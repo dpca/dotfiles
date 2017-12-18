@@ -45,10 +45,12 @@ Plug 'docunext/closetag.vim'
 Plug 'majutsushi/tagbar'
 
 " Completion
+Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
 Plug 'roxma/nvim-completion-manager'
 Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
 Plug 'roxma/ncm-flow'
 Plug 'roxma/ncm-rct-complete'
+Plug 'roxma/ncm-elm-oracle'
 
 " Display
 Plug 'altercation/vim-colors-solarized'
@@ -67,6 +69,12 @@ Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
 
 " Javascript
 Plug 'flowtype/vim-flow', { 'for': 'javascript' }
+
+" Haskell
+Plug 'neovimhaskell/haskell-vim'
+
+" Elm
+Plug 'elmcast/elm-vim'
 
 " Templating, markdown, etc.
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -166,6 +174,12 @@ let g:ale_javascript_eslint_use_global = 1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
 let g:ale_lint_delay = 2000
 
+" LanguageClient-neovim settings
+let g:LanguageClient_serverCommands = {
+\ 'haskell': ['hie', '--lsp'],
+\}
+let g:LanguageClient_autoStart = 1
+
 " Airline settings
 set guifont=Meslo\ LG\ M\ for\ Powerline
 let g:airline_powerline_fonts = 1
@@ -200,14 +214,23 @@ let g:jsx_ext_required = 0 " JSX in js files
 let g:vim_json_syntax_conceal = 0 " Disable hiding quotes for json
 let g:flow#enable = 0 " Disable flow type checking on save
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php, *.jsx"
-autocmd FileType javascript map <leader><space> :FlowType<CR>
+autocmd FileType javascript map <silent> <leader><space> :FlowType<CR>
+autocmd FileType javascript map <silent> gd :FlowJumpToDef<CR>
 "autocmd FileType javascript set formatprg=prettier\ --stdin\ --parser\ flow\ --single-quote\ --trailing-comma\ es5
 
 " Elixir settings
-autocmd FileType elixir map <leader><space> :TestFile<CR>
+autocmd FileType elixir map <silent> <leader><space> :TestFile<CR>
 
 " Python settings
 au FileType python setl sw=2 sts=2 et
 
 " Ruby settings
-nmap <leader>h :%s/:\([^=,'"]*\) =>/\1:/gc<CR>
+autocmd FileType ruby nmap <leader>h :%s/:\([^=,'"]*\) =>/\1:/gc<CR>
+
+" Haskell settings
+autocmd FileType haskell setlocal tabstop=4 shiftwidth=4
+autocmd FileType haskell nnoremap <silent> <leader><space> :call LanguageClient_textDocument_hover()<CR>
+autocmd FileType haskell nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+
+" Elm settings
+autocmd FileType elm setlocal tabstop=4 shiftwidth=4

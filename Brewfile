@@ -18,6 +18,7 @@ brew "zsh"
 brew "cmake"
 brew "htop"
 brew "fzf"
+brew "postgresql"
 cask "qlmarkdown"
 cask "qlstephen"
 
