@@ -43,6 +43,7 @@ Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-repeat'
 Plug 'docunext/closetag.vim'
 Plug 'majutsushi/tagbar'
+Plug 'editorconfig/editorconfig-vim'
 
 " Completion
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
