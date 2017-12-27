@@ -29,6 +29,7 @@ brew "shellcheck"
 brew "httpie"
 brew "watchman"
 brew "jq"
+brew "cloc"
 
 # Languages
 brew "libyaml" # should come after openssl"
