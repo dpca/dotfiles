@@ -167,6 +167,7 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 let g:ale_linters = {
 \ 'javascript': ['eslint', 'flow'],
 \ 'ruby': ['rubocop', 'reek'],
+\ 'python': ['flake8', 'pylint'],
 \}
 let g:ale_fixers = {
 \ 'javascript': ['prettier'],
