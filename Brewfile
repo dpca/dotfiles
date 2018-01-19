@@ -30,6 +30,7 @@ brew "httpie"
 brew "watchman"
 brew "jq"
 brew "cloc"
+brew "tree"
 
 # Languages
 brew "libyaml" # should come after openssl"
