@@ -7,3 +7,4 @@ alias docker-remove-untagged='docker rmi $(docker images | grep "^<none>" | awk 
 alias docker-remove-stopped='docker rm $(docker ps -qa)'
 alias docker-gc='docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /etc:/etc spotify/docker-gc'
 alias generate-ctags='ctags -R --exclude=.git --exclude=tmp --exclude=.bundle --exclude=coverage --exclude=public --exclude=log --exclude=vendor --exclude=doc .'
+alias sha256sum='shasum --algorithm 256'
