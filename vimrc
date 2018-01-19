@@ -235,3 +235,6 @@ autocmd FileType haskell nnoremap <silent> gd :call LanguageClient_textDocument_
 
 " Elm settings
 autocmd FileType elm setlocal tabstop=4 shiftwidth=4
+
+" Markdown settings
+let g:vim_markdown_folding_disabled = 1
