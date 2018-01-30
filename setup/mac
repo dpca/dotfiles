@@ -109,12 +109,18 @@ pip2 install --user --upgrade neovim virtualenv
 pip3 install --user --upgrade neovim jedi psutil setproctitle flake8
 
 if [ ! -d "$HOME/haskell-ide-engine/" ]; then
-  fancy_echo "Installing haskell IDE engine..."
+  fancy_echo "Cloning Haskell IDE engine to ~/haskell-ide-engine"
   git clone https://github.com/haskell/haskell-ide-engine  "$HOME/haskell-ide-engine/"
   cd "$HOME/haskell-ide-engine/"
   stack install
-  cd "$DIR"
+else
+  fancy_echo "Updating Haskell IDE engine"
+  cd "$HOME/haskell-ide-engine/"
+  git pull --rebase
+  stack install
 fi
+
+cd "$DIR"
 
 fancy_echo "Installing dotfiles..."
 env RCRC=$HOME/dotfiles/rcrc rcup
