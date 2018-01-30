@@ -1,5 +1,5 @@
 [core]
-  editor = vim
+  editor = nvim
   excludesfile = ~/.gitignore_global
   hooksPath = ~/.git_hooks
   pager = diff-so-fancy | less -c
