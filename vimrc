@@ -77,6 +77,9 @@ Plug 'neovimhaskell/haskell-vim'
 " Elm
 Plug 'elmcast/elm-vim'
 
+" Reason
+Plug 'reasonml-editor/vim-reason-plus'
+
 " Templating, markdown, etc.
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
@@ -179,6 +182,8 @@ let g:ale_lint_delay = 2000
 " LanguageClient-neovim settings
 let g:LanguageClient_serverCommands = {
 \ 'haskell': ['hie', '--lsp'],
+\ 'reason': ['ocaml-language-server', '--stdio'],
+\ 'ocaml': ['ocaml-language-server', '--stdio'],
 \}
 let g:LanguageClient_autoStart = 1
 
@@ -236,6 +241,11 @@ autocmd FileType haskell nnoremap <silent> gd :call LanguageClient_textDocument_
 
 " Elm settings
 autocmd FileType elm setlocal tabstop=4 shiftwidth=4
+
+" Reason settings
+autocmd FileType reason nnoremap <silent> <leader><space> :call LanguageClient_textDocument_hover()<CR>
+autocmd FileType reason nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+autocmd FileType reason nnoremap <silent> gf :call LanguageClient_textDocument_formatting()<cr>
 
 " Markdown settings
 let g:vim_markdown_folding_disabled = 1

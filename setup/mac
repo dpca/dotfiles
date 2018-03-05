@@ -103,6 +103,10 @@ npm install -g eslint create-react-app eslint-plugin-html flow-bin prettier
 npm_install_with_peer_deps eslint-config-airbnb
 npm_install_with_peer_deps eslint-config-react-app
 
+fancy_echo "Installing reason and ocaml..."
+npm install -g bs-platform ocaml-language-server
+npm install -g https://github.com/reasonml/reason-cli/archive/3.0.4-bin-darwin.tar.gz
+
 fancy_echo "Installing python libraries..."
 pip2 install --user --upgrade neovim virtualenv
 # for nvim-completion-manager
