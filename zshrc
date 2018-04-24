@@ -4,7 +4,7 @@ export ZSH=~/.oh-my-zsh
 ZSH_THEME="agnoster"
 plugins=(git osx brew tmux docker docker-compose rbenv npm yarn mix)
 
-export PATH="/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin"
+export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 source $ZSH/oh-my-zsh.sh
 
