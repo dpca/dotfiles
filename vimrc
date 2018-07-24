@@ -47,11 +47,13 @@ Plug 'editorconfig/editorconfig-vim'
 
 " Completion
 Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
-Plug 'roxma/nvim-completion-manager'
-Plug 'roxma/nvim-cm-tern',  {'do': 'npm install'}
-Plug 'roxma/ncm-flow'
-Plug 'roxma/ncm-rct-complete'
-Plug 'roxma/ncm-elm-oracle'
+if has('nvim')
+  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
+else
+  Plug 'Shougo/deoplete.nvim'
+  Plug 'roxma/nvim-yarp'
+  Plug 'roxma/vim-hug-neovim-rpc'
+endif
 
 " Display
 Plug 'altercation/vim-colors-solarized'
@@ -67,9 +69,6 @@ Plug 'airblade/vim-gitgutter'
 " Ruby
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
-
-" Javascript
-Plug 'flowtype/vim-flow', { 'for': 'javascript' }
 
 " Haskell
 Plug 'neovimhaskell/haskell-vim'
@@ -182,11 +181,16 @@ let g:ale_javascript_eslint_use_global = 1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
 let g:ale_lint_delay = 2000
 
+let g:deoplete#enable_at_startup = 1
+
 " LanguageClient-neovim settings
 let g:LanguageClient_serverCommands = {
+\ 'javascript': ['flow-language-server', '--stdio'],
+\ 'javascript.jsx': ['flow-language-server', '--stdio'],
 \ 'haskell': ['hie', '--lsp'],
 \ 'reason': ['ocaml-language-server', '--stdio'],
 \ 'ocaml': ['ocaml-language-server', '--stdio'],
+\ 'ruby': ['solargraph', 'stdio'],
 \}
 let g:LanguageClient_autoStart = 1
 
@@ -224,8 +228,8 @@ let g:jsx_ext_required = 0 " JSX in js files
 let g:vim_json_syntax_conceal = 0 " Disable hiding quotes for json
 let g:flow#enable = 0 " Disable flow type checking on save
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php, *.jsx"
-autocmd FileType javascript map <silent> <leader><space> :FlowType<CR>
-autocmd FileType javascript map <silent> gd :FlowJumpToDef<CR>
+autocmd FileType javascript nnoremap <silent> <leader><space> :call LanguageClient_textDocument_hover()<CR>
+autocmd FileType javascript nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
 "autocmd FileType javascript set formatprg=prettier\ --stdin\ --parser\ flow\ --single-quote\ --trailing-comma\ es5
 
 " Elixir settings
