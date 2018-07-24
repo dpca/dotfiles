@@ -17,7 +17,10 @@ else
   export EDITOR='vim'
 fi
 
-alias vim="nvim"
+# Use neovim if it's installed
+if type nvim > /dev/null 2>&1; then
+  alias vim='nvim'
+fi
 
 export PATH="$HOME/.bin:$HOME/.local/bin:$PATH"
 
