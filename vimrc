@@ -46,7 +46,10 @@ Plug 'majutsushi/tagbar'
 Plug 'editorconfig/editorconfig-vim'
 
 " Completion
-Plug 'autozimu/LanguageClient-neovim', { 'do': ':UpdateRemotePlugins' }
+Plug 'autozimu/LanguageClient-neovim', {
+\ 'branch': 'next',
+\ 'do': 'bash install.sh',
+\}
 if has('nvim')
   Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
 else
@@ -65,6 +68,9 @@ Plug 'vim-airline/vim-airline-themes'
 " Git
 Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+
+" Javascript
+Plug 'pangloss/vim-javascript'
 
 " Ruby
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
@@ -96,7 +102,6 @@ set nobackup
 set noswapfile
 set nowritebackup
 set number
-set relativenumber
 set ruler
 set shortmess=atI
 set showcmd
@@ -184,6 +189,9 @@ let g:ale_lint_delay = 2000
 let g:deoplete#enable_at_startup = 1
 
 " LanguageClient-neovim settings
+
+set hidden " Required for operations modifying multiple buffers like rename.
+
 let g:LanguageClient_serverCommands = {
 \ 'javascript': ['flow-language-server', '--stdio'],
 \ 'javascript.jsx': ['flow-language-server', '--stdio'],
@@ -228,8 +236,8 @@ let g:jsx_ext_required = 0 " JSX in js files
 let g:vim_json_syntax_conceal = 0 " Disable hiding quotes for json
 let g:flow#enable = 0 " Disable flow type checking on save
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php, *.jsx"
-autocmd FileType javascript nnoremap <silent> <leader><space> :call LanguageClient_textDocument_hover()<CR>
-autocmd FileType javascript nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+autocmd FileType javascript nnoremap <silent> <leader><space> :call LanguageClient#textDocument_hover()<CR>
+autocmd FileType javascript nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 "autocmd FileType javascript set formatprg=prettier\ --stdin\ --parser\ flow\ --single-quote\ --trailing-comma\ es5
 
 " Elixir settings
@@ -243,16 +251,16 @@ autocmd FileType ruby nmap <leader>h :%s/:\([^=,'"]*\) =>/\1:/gc<CR>
 
 " Haskell settings
 autocmd FileType haskell setlocal tabstop=4 shiftwidth=4
-autocmd FileType haskell nnoremap <silent> <leader><space> :call LanguageClient_textDocument_hover()<CR>
-autocmd FileType haskell nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
+autocmd FileType haskell nnoremap <silent> <leader><space> :call LanguageClient#textDocument_hover()<CR>
+autocmd FileType haskell nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 
 " Elm settings
 autocmd FileType elm setlocal tabstop=4 shiftwidth=4
 
 " Reason settings
-autocmd FileType reason nnoremap <silent> <leader><space> :call LanguageClient_textDocument_hover()<CR>
-autocmd FileType reason nnoremap <silent> gd :call LanguageClient_textDocument_definition()<CR>
-autocmd FileType reason nnoremap <silent> gf :call LanguageClient_textDocument_formatting()<cr>
+autocmd FileType reason nnoremap <silent> <leader><space> :call LanguageClient#textDocument_hover()<CR>
+autocmd FileType reason nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+autocmd FileType reason nnoremap <silent> gf :call LanguageClient#textDocument_formatting()<cr>
 
 " Markdown settings
 let g:vim_markdown_folding_disabled = 1
