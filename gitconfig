@@ -1,8 +1,7 @@
 [core]
   editor = nvim
   excludesfile = ~/.gitignore_global
-  hooksPath = ~/.git_hooks
-  pager = diff-so-fancy | less -c
+  pager = diff-so-fancy | less --tabs=4 -R
 
 [color "status"]
   untracked = cyan
@@ -22,3 +21,17 @@
 
   # Show the diff between the latest commit and the current state
   d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
+[color]
+	ui = true
+[color "diff-highlight"]
+	oldNormal = red bold
+	oldHighlight = red bold 52
+	newNormal = green bold
+	newHighlight = green bold 22
+[color "diff"]
+	meta = yellow
+	frag = magenta bold
+	commit = yellow bold
+	old = red bold
+	new = green bold
+	whitespace = red reverse
