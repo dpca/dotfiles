@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
 
-# Setup script inspired by thoughtbot/laptop
-# https://github.com/thoughtbot/laptop
+# ----------------------------------------------------------------------------
+# Functions
+# ----------------------------------------------------------------------------
 
 reset="\\e[0m"
 red="\\e[0;31m"
@@ -27,7 +28,9 @@ gem_install_or_update() {
 }
 
 npm_install_with_peer_deps() {
-  npm info "$1@latest" peerDependencies --json | command sed 's/[\{\},]//g ; s/: /@/g' | xargs npm install -g "$1@latest"
+  npm info "$1@latest" peerDependencies --json \
+    | command sed 's/[\{\},]//g ; s/: /@/g' \
+    | xargs npm install -g "$1@latest"
 }
 
 install_asdf_plugin() {
@@ -56,7 +59,10 @@ set -e
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 HOMEBREW_PREFIX="/usr/local"
 
-# oh-my-zsh
+# ----------------------------------------------------------------------------
+# Terminal
+# ----------------------------------------------------------------------------
+
 if [ ! -d "$HOME/.oh-my-zsh/" ]; then
   fancy_echo "Installing oh-my-zsh..."
   sh -c "$(curl -fsSL https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh)"
@@ -65,6 +71,21 @@ fi
 if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
+
+if [ ! -d "$HOME/.powerline-fonts/" ]; then
+  fancy_echo "Installing powerline fonts..."
+  git clone https://github.com/powerline/fonts "$HOME/.powerline-fonts"
+  sh "$HOME/.powerline-fonts/install.sh"
+fi
+
+if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
+  fancy_echo "Installing Tmux Plugin Manager"
+  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+fi
+
+# ----------------------------------------------------------------------------
+# Homebrew
+# ----------------------------------------------------------------------------
 
 if [ -d "$HOMEBREW_PREFIX" ]; then
   if ! [ -r "$HOMEBREW_PREFIX" ]; then
@@ -93,11 +114,19 @@ fancy_echo "Updating Homebrew formulae ..."
 brew update
 brew bundle --file="$DIR/../Brewfile"
 
+# ----------------------------------------------------------------------------
+# ASDF
+# ----------------------------------------------------------------------------
+
 install_asdf_plugin "elixir" "https://github.com/asdf-vm/asdf-elixir.git"
 install_asdf_plugin "haskell" "https://github.com/vic/asdf-haskell.git"
 install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
 install_asdf_plugin "python" "https://github.com/tuvistavie/asdf-python.git"
 install_asdf_plugin "ruby" "https://github.com/asdf-vm/asdf-ruby.git"
+
+# ----------------------------------------------------------------------------
+# Ruby
+# ----------------------------------------------------------------------------
 
 fancy_echo "Installing latest ruby..."
 install_asdf_language "ruby"
@@ -112,6 +141,10 @@ gem_install_or_update 'reek'
 gem_install_or_update 'neovim'
 gem_install_or_update 'rcodetools'
 gem_install_or_update 'fastri'
+
+# ----------------------------------------------------------------------------
+# Node
+# ----------------------------------------------------------------------------
 
 fancy_echo "Installing latest node..."
 bash "$HOME/.asdf/plugins/nodejs/bin/import-release-team-keyring"
@@ -132,6 +165,10 @@ npm_install_with_peer_deps eslint-config-react-app
 npm_install_with_peer_deps eslint-config-prettier
 npm_install_with_peer_deps eslint-plugin-flowtype
 
+# ----------------------------------------------------------------------------
+# Python
+# ----------------------------------------------------------------------------
+
 fancy_echo "Installing latest python..."
 install_asdf_language "python"
 
@@ -140,8 +177,16 @@ pip2 install --user --upgrade neovim virtualenv
 # for nvim-completion-manager
 pip3 install --user --upgrade neovim jedi psutil setproctitle flake8
 
+# ----------------------------------------------------------------------------
+# Elixir
+# ----------------------------------------------------------------------------
+
 fancy_echo "Installing latest elixir..."
 install_asdf_language "elixir"
+
+# ----------------------------------------------------------------------------
+# Haskell
+# ----------------------------------------------------------------------------
 
 fancy_echo "Installing latest haskell..."
 install_asdf_language "haskell"
@@ -162,24 +207,30 @@ fi
 
 cd "$DIR"
 
+# ----------------------------------------------------------------------------
+# Dotfiles setup
+# ----------------------------------------------------------------------------
+
 fancy_echo "Installing dotfiles..."
 env RCRC="$HOME/dotfiles/rcrc rcup"
 
-if [ ! -d "$HOME/.powerline-fonts/" ]; then
-  fancy_echo "Installing powerline fonts..."
-  git clone https://github.com/powerline/fonts "$HOME/.powerline-fonts"
-  sh "$HOME/.powerline-fonts/install.sh"
-fi
+# ----------------------------------------------------------------------------
+# VIM
+# ----------------------------------------------------------------------------
 
 if [ ! -d "$HOME/.vim/undo/" ]; then
   fancy_echo "Creating ~/.vim/undo"
   mkdir -p ~/.vim/undo
 fi
 
-if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
-  fancy_echo "Installing Tmux Plugin Manager"
-  git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-fi
+fancy_echo "Symlinking things for neovim"
+mkdir -p "$HOME/.config"
+ln -s ~/.vim "$HOME/.config/nvim"
+ln -s ~/.vimrc "$HOME/.config/nvim/init.vim"
+
+# ----------------------------------------------------------------------------
+# System settings
+# ----------------------------------------------------------------------------
 
 if [ "$(defaults read com.apple.finder AppleShowAllFiles)" != "YES" ] ; then
   fancy_echo "Setting terminal to show all files"
@@ -191,11 +242,6 @@ if [ "$(defaults read com.apple.desktopservices DSDontWriteNetworkStores)" != "1
   fancy_echo "Disabling storage of invisible files on network stores"
   defaults write com.apple.desktopservices DSDontWriteNetworkStores -bool true
 fi
-
-fancy_echo "Symlinking things for neovim"
-mkdir -p "$HOME/.config"
-ln -s ~/.vim "$HOME/.config/nvim"
-ln -s ~/.vimrc "$HOME/.config/nvim/init.vim"
 
 fancy_echo "Success!" "$green"
 

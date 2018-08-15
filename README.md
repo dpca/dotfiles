@@ -1,9 +1,9 @@
 # dotfiles
 
-Dotfiles and setup scripts to automate OS X setup. Largely inspired by
-Thoughtbot's [laptop](https://github.com/thoughtbot/laptop) and
-[dotfiles](https://github.com/thoughtbot/dotfiles) repos but modified to suit
-my own needs.
+Dotfiles and setup scripts to automate macOS setup.
+
+[Homebrew](https://brew.sh/) is used for package management and
+[ASDF](https://github.com/asdf-vm/asdf) for managing programming languages.
 
 ## Install
 
@@ -16,8 +16,7 @@ Run `rcup` after adding new files to the directory to properly symlink them.
 
 ## Other apps
 
-* Google Chrome
-  * Postman
+* Firefox
 * OmniFocus
 * Tweetbot
 * Slack
@@ -27,7 +26,6 @@ Run `rcup` after adding new files to the directory to properly symlink them.
 * Docker for Mac
 * Alfred
 * Viscosity
-* [Aerial screen saver](https://github.com/JohnCoates/Aerial)
 
 ## Settings
 
@@ -45,3 +43,10 @@ Run `rcup` after adding new files to the directory to properly symlink them.
 * Terminal
   * Font: Meslo LG M Regular for Powerline 11pt.
   * Use option as Meta key
+
+## Acknowledgements
+
+Many thanks to [Thoughtbot](https://thoughtbot.com/) for their
+[laptop](https://github.com/thoughtbot/laptop) and
+[dotfiles](https://github.com/thoughtbot/dotfiles) repos, which served as the
+starting point for this repo.
