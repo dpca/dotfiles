@@ -27,8 +27,9 @@ fi
 
 export PATH="$HOME/.bin:$HOME/.local/bin:$PATH"
 
-# Ruby
-eval "$(rbenv init - zsh --no-rehash)"
+# asdf
+source "$HOME/.asdf/asdf.sh"
+source "$HOME/.asdf/completions/asdf.bash"
 
 # Haskell
 autoload -U +X compinit && compinit
