@@ -1,21 +1,21 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Setup script inspired by thoughtbot/laptop
 # https://github.com/thoughtbot/laptop
 
-reset="\e[0m"
-red="\e[0;31m"
-green="\e[0;32m"
-yellow="\e[0;33m"
-cyan="\e[0;36m"
-white="\e[0;37m"
+reset="\\e[0m"
+red="\\e[0;31m"
+green="\\e[0;32m"
+yellow="\\e[0;33m"
+cyan="\\e[0;36m"
+white="\\e[0;37m"
 
 fancy_echo() {
   local color=${2:-$cyan}
   local fmt="$color$1$reset"; shift
 
   # shellcheck disable=SC2059
-  printf "\n$fmt\n" "$@"
+  printf "\\n$fmt\\n" "$@"
 }
 
 find_latest_ruby() {
