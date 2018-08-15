@@ -17,6 +17,9 @@ else
   export EDITOR='vim'
 fi
 
+# Less
+export LESS=-R
+
 # Use neovim if it's installed
 if type nvim > /dev/null 2>&1; then
   alias vim='nvim'
