@@ -75,10 +75,10 @@ fi
 
 fancy_echo "Updating Homebrew formulae ..."
 brew update
-brew bundle --file=$DIR/../Brewfile
+brew bundle --file="$DIR/../Brewfile"
 
 # Install useful key bindings and fuzzy completion for fzf
-$(brew --prefix)/opt/fzf/install
+"$(brew --prefix)/opt/fzf/install"
 
 fancy_echo "Configuring Ruby..."
 ruby_version="$(find_latest_ruby)"
@@ -133,12 +133,12 @@ fi
 cd "$DIR"
 
 fancy_echo "Installing dotfiles..."
-env RCRC=$HOME/dotfiles/rcrc rcup
+env RCRC="$HOME/dotfiles/rcrc rcup"
 
 if [ ! -d "$HOME/.powerline-fonts/" ]; then
   fancy_echo "Installing powerline fonts..."
-  git clone https://github.com/powerline/fonts $HOME/.powerline-fonts
-  sh $HOME/.powerline-fonts/install.sh
+  git clone https://github.com/powerline/fonts "$HOME/.powerline-fonts"
+  sh "$HOME/.powerline-fonts/install.sh"
 fi
 
 if [ ! -d "$HOME/.vim/undo/" ]; then
@@ -163,11 +163,11 @@ if [ "$(defaults read com.apple.desktopservices DSDontWriteNetworkStores)" != "1
 fi
 
 fancy_echo "Symlinking things for neovim"
-mkdir -p $HOME/.config
-ln -s ~/.vim $HOME/.config/nvim
-ln -s ~/.vimrc $HOME/.config/nvim/init.vim
+mkdir -p "$HOME/.config"
+ln -s ~/.vim "$HOME/.config/nvim"
+ln -s ~/.vimrc "$HOME/.config/nvim/init.vim"
 
-fancy_echo "Success!" $green
+fancy_echo "Success!" "$green"
 
 fancy_echo "Next steps:
   - Set GIT_NAME, GIT_EMAIL, HOME_EMAIL in .env in this folder
