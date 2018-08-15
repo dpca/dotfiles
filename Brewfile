@@ -2,6 +2,7 @@ tap "thoughtbot/formulae"
 
 # OS
 brew "autojump"
+brew "bash"
 brew "ctags"
 brew "diff-so-fancy"
 brew "git"
