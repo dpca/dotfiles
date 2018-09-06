@@ -193,8 +193,8 @@ let g:deoplete#enable_at_startup = 1
 set hidden " Required for operations modifying multiple buffers like rename.
 
 let g:LanguageClient_serverCommands = {
-\ 'javascript': ['flow-language-server', '--stdio'],
-\ 'javascript.jsx': ['flow-language-server', '--stdio'],
+\ 'javascript': ['flow', 'lsp', '--from', './node_modules/.bin'],
+\ 'javascript.jsx': ['flow', 'lsp', '--from', './node_modules/.bin'],
 \ 'haskell': ['hie', '--lsp'],
 \ 'reason': ['ocaml-language-server', '--stdio'],
 \ 'ocaml': ['ocaml-language-server', '--stdio'],
