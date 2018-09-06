@@ -11,8 +11,8 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 if has('nvim')
-  let g:python_host_prog  = '/usr/local/bin/python2'
-  let g:python3_host_prog  = '/usr/local/bin/python3'
+  let g:python_host_prog  = 'python'
+  let g:python3_host_prog  = 'python3'
 endif
 
 call plug#begin('~/.vim/bundle')
