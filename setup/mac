@@ -118,6 +118,13 @@ brew bundle --file="$DIR/../Brewfile"
 # ASDF
 # ----------------------------------------------------------------------------
 
+if [ ! -d "$HOME/.asdf/" ]; then
+  fancy_echo "Installing asdf..."
+  git clone https://github.com/asdf-vm/asdf.git ~/.asdf --branch v0.5.1
+fi
+
+source "$HOME/.asdf/asdf.sh"
+
 install_asdf_plugin "elixir" "https://github.com/asdf-vm/asdf-elixir.git"
 install_asdf_plugin "haskell" "https://github.com/vic/asdf-haskell.git"
 install_asdf_plugin "nodejs" "https://github.com/asdf-vm/asdf-nodejs.git"
@@ -212,7 +219,7 @@ cd "$DIR"
 # ----------------------------------------------------------------------------
 
 fancy_echo "Installing dotfiles..."
-env RCRC="$HOME/dotfiles/rcrc rcup"
+env RCRC="$HOME/dotfiles/rcrc" rcup
 
 # ----------------------------------------------------------------------------
 # VIM
