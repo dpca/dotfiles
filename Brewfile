@@ -22,18 +22,20 @@ cask "qlmarkdown"
 cask "qlstephen"
 
 # Utilities
+brew "bat"
 brew "cloc"
+brew "fd"
 brew "htop"
 brew "httpie"
 brew "imagemagick"
 brew "jq"
+brew "pandoc"
 brew "qt5"
 brew "shellcheck"
 brew "ssh-copy-id"
 brew "tree"
 
 # Programming language prerequisites and package managers
-brew "asdf"
 brew "coreutils"
 brew "libyaml" # should come after openssl"
 brew "yarn"
