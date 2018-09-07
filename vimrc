@@ -201,6 +201,9 @@ let g:LanguageClient_serverCommands = {
 \ 'ruby': ['solargraph', 'stdio'],
 \}
 let g:LanguageClient_autoStart = 1
+nnoremap <silent> <leader><space> :call LanguageClient#textDocument_hover()<CR>
+nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
+nnoremap <silent> gf :call LanguageClient#textDocument_formatting()<cr>
 
 " Airline settings
 set guifont=Meslo\ LG\ M\ for\ Powerline
@@ -236,8 +239,6 @@ let g:jsx_ext_required = 0 " JSX in js files
 let g:vim_json_syntax_conceal = 0 " Disable hiding quotes for json
 let g:flow#enable = 0 " Disable flow type checking on save
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php, *.jsx"
-autocmd FileType javascript nnoremap <silent> <leader><space> :call LanguageClient#textDocument_hover()<CR>
-autocmd FileType javascript nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 "autocmd FileType javascript set formatprg=prettier\ --stdin\ --parser\ flow\ --single-quote\ --trailing-comma\ es5
 
 " Elixir settings
@@ -251,16 +252,9 @@ autocmd FileType ruby nmap <leader>h :%s/:\([^=,'"]*\) =>/\1:/gc<CR>
 
 " Haskell settings
 autocmd FileType haskell setlocal tabstop=4 shiftwidth=4
-autocmd FileType haskell nnoremap <silent> <leader><space> :call LanguageClient#textDocument_hover()<CR>
-autocmd FileType haskell nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 
 " Elm settings
 autocmd FileType elm setlocal tabstop=4 shiftwidth=4
-
-" Reason settings
-autocmd FileType reason nnoremap <silent> <leader><space> :call LanguageClient#textDocument_hover()<CR>
-autocmd FileType reason nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-autocmd FileType reason nnoremap <silent> gf :call LanguageClient#textDocument_formatting()<cr>
 
 " Markdown settings
 let g:vim_markdown_folding_disabled = 1
