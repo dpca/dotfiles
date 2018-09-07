@@ -12,38 +12,38 @@ endif
 
 if has('nvim')
   let g:python_host_prog  = 'python'
-  let g:python3_host_prog  = 'python3'
+  let g:python3_host_prog = 'python3'
 endif
 
 call plug#begin('~/.vim/bundle')
 
 " Support
+Plug 'SirVer/ultisnips'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+Plug 'docunext/closetag.vim'
+Plug 'editorconfig/editorconfig-vim'
 Plug 'ervandew/supertab'
 Plug 'honza/vim-snippets'
 Plug 'janko-m/vim-test'
 Plug 'jeetsukumaran/vim-buffergator'
+Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'ludovicchabant/vim-gutentags'
+Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'mileszs/ack.vim'
 Plug 'mtth/scratch.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-Plug 'w0rp/ale'
-Plug 'SirVer/ultisnips'
+Plug 'sheerun/vim-polyglot'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-endwise'
+Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/matchit.zip'
-Plug 'sheerun/vim-polyglot'
-Plug 'tpope/vim-repeat'
-Plug 'docunext/closetag.vim'
-Plug 'majutsushi/tagbar'
-Plug 'editorconfig/editorconfig-vim'
+Plug 'w0rp/ale'
 
 " Completion
 Plug 'autozimu/LanguageClient-neovim', {
@@ -66,8 +66,8 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 
 " Git
-Plug 'tpope/vim-fugitive'
 Plug 'airblade/vim-gitgutter'
+Plug 'tpope/vim-fugitive'
 
 " Javascript
 Plug 'pangloss/vim-javascript'
