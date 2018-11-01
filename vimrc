@@ -18,14 +18,10 @@ endif
 call plug#begin('~/.vim/bundle')
 
 " Support
-Plug 'SirVer/ultisnips'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'docunext/closetag.vim'
 Plug 'editorconfig/editorconfig-vim'
 Plug 'ervandew/supertab'
-Plug 'honza/vim-snippets'
-Plug 'janko-m/vim-test'
-Plug 'jeetsukumaran/vim-buffergator'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
@@ -33,11 +29,9 @@ Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'mileszs/ack.vim'
-Plug 'mtth/scratch.vim'
 Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'sheerun/vim-polyglot'
-Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
@@ -150,11 +144,6 @@ nnoremap <leader><leader> <c-^> " Switch between the last two files
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-" UltiSnips settings
-let g:UltiSnipsExpandTrigger = "<leader><tab>"
-let g:UltiSnipsJumpForwardTrigger = "<tab>"
-let g:UltiSnipsJumpBackwardTrigger = "<s-tab>"
-
 " Solarized color scheme
 syntax enable
 set background=dark
@@ -199,6 +188,7 @@ let g:LanguageClient_serverCommands = {
 \ 'reason': ['ocaml-language-server', '--stdio'],
 \ 'ocaml': ['ocaml-language-server', '--stdio'],
 \ 'ruby': ['solargraph', 'stdio'],
+\ 'python': ['pyls', '-v'],
 \}
 let g:LanguageClient_autoStart = 1
 nnoremap <silent> <leader><space> :call LanguageClient#textDocument_hover()<CR>
@@ -240,12 +230,6 @@ let g:vim_json_syntax_conceal = 0 " Disable hiding quotes for json
 let g:flow#enable = 0 " Disable flow type checking on save
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php, *.jsx"
 "autocmd FileType javascript set formatprg=prettier\ --stdin\ --parser\ flow\ --single-quote\ --trailing-comma\ es5
-
-" Elixir settings
-autocmd FileType elixir map <silent> <leader><space> :TestFile<CR>
-
-" Python settings
-au FileType python setl sw=2 sts=2 et
 
 " Ruby settings
 autocmd FileType ruby nmap <leader>h :%s/:\([^=,'"]*\) =>/\1:/gc<CR>
