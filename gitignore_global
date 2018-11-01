@@ -2,7 +2,6 @@
 *.sw[nop]
 .bundle
 .byebug_history
-.env
 db/*.sqlite3
 log/*.log
 rerun.txt
@@ -13,3 +12,6 @@ tags.temp
 tmp/**/*
 !tmp/cache/.keep
 *.pyc
+.bash_history
+.python_history
+newrelic_agent.log
