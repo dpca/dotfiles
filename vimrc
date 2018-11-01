@@ -66,6 +66,9 @@ Plug 'tpope/vim-fugitive'
 " Javascript
 Plug 'pangloss/vim-javascript'
 
+" Typescript
+Plug 'leafgarland/typescript-vim'
+
 " Ruby
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
@@ -165,6 +168,7 @@ let g:SuperTabDefaultCompletionType = '<C-n>'
 
 let g:ale_linters = {
 \ 'javascript': ['eslint', 'flow'],
+\ 'typescript': ['tslint'],
 \ 'ruby': ['rubocop', 'reek'],
 \ 'python': ['flake8', 'pylint'],
 \}
@@ -184,6 +188,7 @@ set hidden " Required for operations modifying multiple buffers like rename.
 let g:LanguageClient_serverCommands = {
 \ 'javascript': ['flow', 'lsp', '--from', './node_modules/.bin'],
 \ 'javascript.jsx': ['flow', 'lsp', '--from', './node_modules/.bin'],
+\ 'typescript': ['javascript-typescript-stdio'],
 \ 'haskell': ['hie', '--lsp'],
 \ 'reason': ['ocaml-language-server', '--stdio'],
 \ 'ocaml': ['ocaml-language-server', '--stdio'],
@@ -194,6 +199,8 @@ let g:LanguageClient_autoStart = 1
 nnoremap <silent> <leader><space> :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> gf :call LanguageClient#textDocument_formatting()<cr>
+autocmd FileType javascript setlocal omnifunc=LanguageClient#complete
+autocmd FileType typescript setlocal omnifunc=LanguageClient#complete
 
 " Airline settings
 set guifont=Meslo\ LG\ M\ for\ Powerline
