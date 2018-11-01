@@ -166,7 +166,8 @@ npm install -g \
   flow-bin \
   flow-language-server \
   neovim \
-  prettier
+  prettier \
+  javascript-typescript-langserver
 npm_install_with_peer_deps eslint-config-airbnb
 npm_install_with_peer_deps eslint-config-react-app
 npm_install_with_peer_deps eslint-config-prettier
@@ -182,7 +183,9 @@ install_asdf_language "python"
 fancy_echo "Installing python libraries..."
 pip2 install --user --upgrade neovim virtualenv
 # for nvim-completion-manager
-pip3 install --user --upgrade neovim jedi psutil setproctitle flake8
+pip3 install --user --upgrade neovim jedi psutil setproctitle flake8 python-language-server
+
+asdf reshim python
 
 # ----------------------------------------------------------------------------
 # Elixir
