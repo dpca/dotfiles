@@ -2,7 +2,26 @@
 export ZSH=~/.oh-my-zsh
 
 ZSH_THEME="agnoster"
-plugins=(git osx brew tmux docker docker-compose rbenv npm yarn mix)
+plugins=(
+asdf
+autojump
+brew
+bundler
+cp
+docker
+docker-compose
+fzf
+git
+mix
+node
+npm
+osx
+python
+rbenv
+ruby
+tmux
+yarn
+)
 
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 
@@ -41,3 +60,11 @@ export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
 export PATH="/usr/local/opt/openssl/bin:$PATH"
+
+# completions
+timetrap_lib=$(gem which timetrap)
+timetrap=$(dirname $(dirname "${timetrap_lib}"))
+fpath=("$timetrap/completions/zsh" $fpath)
+
+autoload -U compinit
+compinit
