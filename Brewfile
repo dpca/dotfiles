@@ -40,6 +40,7 @@ brew "coreutils"
 brew "libyaml" # should come after openssl"
 brew "yarn"
 cask "gpg-suite"
+brew "pipenv"
 
 # Databases
 brew "postgresql"
