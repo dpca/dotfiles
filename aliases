@@ -14,3 +14,6 @@ alias docker-remove-dangling='docker rmi $(docker images -f "dangling=true" -q)'
 alias docker-remove-untagged='docker rmi $(docker images | grep "^<none>" | awk "{print $3}")'
 alias docker-remove-stopped='docker rm $(docker ps -qa)'
 alias docker-gc='docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /etc:/etc spotify/docker-gc'
+
+# git
+alias gupc='gup && git-delete-merged'
