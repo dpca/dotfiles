@@ -11,7 +11,7 @@ if empty(glob('~/.vim/autoload/plug.vim'))
 endif
 
 if has('nvim')
-  let g:python_host_prog  = 'python'
+  let g:python_host_prog  = 'python2'
   let g:python3_host_prog = 'python3'
 endif
 
@@ -196,6 +196,7 @@ let g:LanguageClient_serverCommands = {
 \ 'python': ['pyls', '-v'],
 \}
 let g:LanguageClient_autoStart = 1
+let g:LanguageClient_useVirtualText = 0
 nnoremap <silent> <leader><space> :call LanguageClient#textDocument_hover()<CR>
 nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
 nnoremap <silent> gf :call LanguageClient#textDocument_formatting()<cr>
@@ -249,3 +250,4 @@ autocmd FileType elm setlocal tabstop=4 shiftwidth=4
 
 " Markdown settings
 let g:vim_markdown_folding_disabled = 1
+autocmd FileType rst normal zR
