@@ -2,6 +2,7 @@
   editor = nvim
   excludesfile = ~/.gitignore_global
   pager = diff-so-fancy | less --tabs=4 -R
+  hooksPath = ~/.git_hooks
 
 [color "status"]
   untracked = cyan
