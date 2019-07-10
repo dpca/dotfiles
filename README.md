@@ -41,7 +41,7 @@ Run `rcup` after adding new files to the directory to properly symlink them.
   * App Expose: Down w/ 4 fingers
 
 * Terminal
-  * Font: Meslo LG M Regular for Powerline 11pt.
+  * Font: [Hack](https://github.com/source-foundry/Hack) 11pt.
   * Use option as Meta key
 
 ## Acknowledgements

@@ -1,6 +1,7 @@
 tap "thoughtbot/formulae"
 tap "universal-ctags/universal-ctags"
 tap "caskroom/cask"
+tap "caskroom/fonts"
 
 # OS
 brew "autojump"
@@ -20,6 +21,7 @@ brew "watchman"
 brew "zsh"
 cask "qlmarkdown"
 cask "qlstephen"
+cask "font-hack-nerd-font"
 
 # Utilities
 brew "bat"
