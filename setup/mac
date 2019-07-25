@@ -72,12 +72,6 @@ if [ ! -d "$HOME/.bin/" ]; then
   mkdir "$HOME/.bin"
 fi
 
-if [ ! -d "$HOME/.powerline-fonts/" ]; then
-  fancy_echo "Installing powerline fonts..."
-  git clone https://github.com/powerline/fonts "$HOME/.powerline-fonts"
-  sh "$HOME/.powerline-fonts/install.sh"
-fi
-
 if [ ! -d "$HOME/.tmux/plugins/tpm" ]; then
   fancy_echo "Installing Tmux Plugin Manager"
   git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm

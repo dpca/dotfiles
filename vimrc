@@ -25,7 +25,7 @@ Plug 'ervandew/supertab'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'ludovicchabant/vim-gutentags'
+"Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'mileszs/ack.vim'
@@ -40,47 +40,38 @@ Plug 'vim-scripts/matchit.zip'
 Plug 'w0rp/ale'
 
 " Completion
-Plug 'autozimu/LanguageClient-neovim', {
-\ 'branch': 'next',
-\ 'do': 'bash install.sh',
-\}
-if has('nvim')
-  Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
-else
-  Plug 'Shougo/deoplete.nvim'
-  Plug 'roxma/nvim-yarp'
-  Plug 'roxma/vim-hug-neovim-rpc'
-endif
+Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
 
 " Display
 Plug 'altercation/vim-colors-solarized'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'flazz/vim-colorschemes'
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
+Plug 'itchyny/lightline.vim'
+Plug 'maximbaz/lightline-ale'
+Plug 'mengelbrecht/lightline-bufferline'
 
 " Git
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 " Javascript
-Plug 'pangloss/vim-javascript'
+Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 " Typescript
-Plug 'leafgarland/typescript-vim'
+Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
 
 " Ruby
 Plug 'tpope/vim-rails', { 'for': 'ruby' }
 Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
 
 " Haskell
-Plug 'neovimhaskell/haskell-vim'
+Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
 
 " Elm
-Plug 'elmcast/elm-vim'
+Plug 'elmcast/elm-vim', { 'for': 'elm' }
 
 " Reason
-Plug 'reasonml-editor/vim-reason-plus'
+Plug 'reasonml-editor/vim-reason-plus', { 'for': 'reason' }
 
 " Templating, markdown, etc.
 Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
@@ -166,11 +157,14 @@ nnoremap <C-p> :FZF<CR>
 
 let g:SuperTabDefaultCompletionType = '<C-n>'
 
+" ALE settings
+"
+"let g:ale_enabled = 0
 let g:ale_linters = {
 \ 'javascript': ['eslint', 'flow'],
 \ 'typescript': ['tslint'],
-\ 'ruby': ['rubocop', 'reek'],
 \ 'python': ['flake8', 'pylint'],
+\ 'ruby': ['rubocop', 'reek'],
 \}
 let g:ale_fixers = {
 \ 'javascript': ['prettier'],
@@ -179,46 +173,86 @@ let g:ale_javascript_eslint_use_global = 1
 let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
 let g:ale_lint_delay = 2000
 
-let g:deoplete#enable_at_startup = 1
+nmap <silent> [v <Plug>(ale_previous_wrap)
+nmap <silent> ]v <Plug>(ale_next_wrap)
 
-" LanguageClient-neovim settings
+" Coc settings
 
 set hidden " Required for operations modifying multiple buffers like rename.
+set showtabline=2 " Always show tabline
+set shortmess+=c " don't give |ins-completion-menu| messages.
 
-let g:LanguageClient_serverCommands = {
-\ 'javascript': ['flow', 'lsp', '--from', './node_modules/.bin'],
-\ 'javascript.jsx': ['flow', 'lsp', '--from', './node_modules/.bin'],
-\ 'typescript': ['javascript-typescript-stdio'],
-\ 'haskell': ['hie', '--lsp'],
-\ 'reason': ['ocaml-language-server', '--stdio'],
-\ 'ocaml': ['ocaml-language-server', '--stdio'],
-\ 'ruby': ['solargraph', 'stdio'],
-\ 'python': ['pyls', '-v'],
-\}
-let g:LanguageClient_autoStart = 1
-let g:LanguageClient_useVirtualText = 0
-nnoremap <silent> <leader><space> :call LanguageClient#textDocument_hover()<CR>
-nnoremap <silent> gd :call LanguageClient#textDocument_definition()<CR>
-nnoremap <silent> gf :call LanguageClient#textDocument_formatting()<cr>
-autocmd FileType javascript setlocal omnifunc=LanguageClient#complete
-autocmd FileType typescript setlocal omnifunc=LanguageClient#complete
+" Use <c-space> for trigger completion.
+inoremap <silent><expr> <c-space> coc#refresh()
 
-" Airline settings
-set guifont=Meslo\ LG\ M\ for\ Powerline
-let g:airline_powerline_fonts = 1
-let g:airline_left_sep = ''
-let g:airline_left_alt_sep = ''
-let g:airline_right_sep = ''
-let g:airline_right_alt_sep = ''
-let g:airline_symbols = {}
-let g:airline_symbols.branch = ''
-let g:airline_symbols.readonly = ''
-let g:airline_symbols.linenr = ''
-let g:airline#extensions#tabline#enabled = 1     " Show buffers
-let g:airline#extensions#tabline#fnamemod = ':t' " Only show buffer file names
+" Use `[c` and `]c` for navigate diagnostics
+nmap <silent> [c <Plug>(coc-diagnostic-prev)
+nmap <silent> ]c <Plug>(coc-diagnostic-next)
 
-" Buffergator settings
-let g:buffergator_viewport_split_policy = 'R'
+" Remap keys for gotos
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K for show documentation in preview window
+nnoremap <silent> <leader><space> :call <SID>show_documentation()<CR>
+function! s:show_documentation()
+  if &filetype == 'vim'
+    execute 'h '.expand('<cword>')
+  else
+    call CocActionAsync('doHover')
+  endif
+endfunction
+
+" Remap for rename current word
+nmap <leader>rn <Plug>(coc-rename)
+
+" Lightline settings
+
+let g:lightline = {
+      \ 'colorscheme': 'solarized',
+      \ 'active': {
+      \   'left':  [
+      \     [ 'mode', 'paste' ],
+      \     [ 'gitbranch', 'modified' ],
+      \     [ 'filename' ],
+      \     [ 'cocstatus' ],
+      \   ],
+      \   'right': [
+      \     [ 'lineinfo' ],
+      \     [ 'percent' ],
+      \     [ 'fileformat', 'fileencoding', 'filetype' ],
+      \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
+      \   ],
+      \ },
+      \ 'tabline': {
+      \   'left': [ [ 'buffers' ] ],
+      \   'right': [ [ ] ],
+      \ },
+      \ 'component_function': {
+      \   'gitbranch': 'fugitive#head',
+      \   'cocstatus': 'coc#status'
+      \ },
+      \ 'component_expand': {
+      \   'linter_checking': 'lightline#ale#checking',
+      \   'linter_warnings': 'lightline#ale#warnings',
+      \   'linter_errors': 'lightline#ale#errors',
+      \   'linter_ok': 'lightline#ale#ok',
+      \   'buffers': 'lightline#bufferline#buffers',
+      \ },
+      \ 'component_type': {
+      \   'buffers': 'tabsel',
+      \ },
+      \ }
+
+let g:lightline#ale#indicator_checking = "\uf110"
+let g:lightline#ale#indicator_warnings = "\uf071 "
+let g:coc_status_warning_sign = "\uf071 "
+let g:lightline#ale#indicator_errors = "\uf05e "
+let g:coc_status_error_sign = "\uf05e "
+let g:lightline#ale#indicator_ok = "\uf00c"
+let g:lightline#bufferline#filename_modifier = ':t'
 
 " Gitgutter settings
 let g:gitgutter_max_signs = 10000
@@ -228,6 +262,7 @@ nmap <F8> :TagbarToggle<CR>
 
 " Turn on spell checking for certain files
 autocmd Bufread,BufNewFile *.md setlocal spell
+autocmd Bufread,BufNewFile *.rst setlocal spell
 autocmd FileType gitcommit setlocal spell
 
 " Javascript settings
