@@ -55,7 +55,7 @@ source "$HOME/.asdf/completions/asdf.bash"
 
 # fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-export FZF_DEFAULT_COMMAND='ag --hidden -g ""'
+export FZF_DEFAULT_COMMAND='rg --files --hidden'
 
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases

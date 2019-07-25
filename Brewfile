@@ -14,7 +14,7 @@ brew "neovim"
 brew "openssl"
 brew "rcm"
 brew "reattach-to-user-namespace"
-brew "the_silver_searcher"
+brew "ripgrep"
 brew "tmux"
 brew "universal-ctags", args: ["HEAD"]
 brew "watchman"

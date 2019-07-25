@@ -157,9 +157,9 @@ endif
 colorscheme solarized
 
 " Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
-if executable('ag')
-  set grepprg=ag\ --nogroup\ --nocolor " Use Ag over Grep
-  let g:ackprg = 'ag --vimgrep'
+if executable('rg')
+  set grepprg=rg\ --nogroup\ --nocolor " Use Ag over Grep
+  let g:ackprg = 'rg --vimgrep'
 endif
 
 nnoremap <C-p> :FZF<CR>
