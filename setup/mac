@@ -178,7 +178,7 @@ install_asdf_language "python"
 fancy_echo "Installing python libraries..."
 pip2 install --user --upgrade neovim virtualenv
 # for nvim-completion-manager
-pip3 install --user --upgrade neovim jedi psutil setproctitle flake8 python-language-server
+pip3 install --user --upgrade awscli neovim jedi psutil setproctitle flake8 python-language-server
 
 asdf reshim python
 
@@ -226,6 +226,16 @@ env RCRC="$HOME/dotfiles/rcrc" rcup
 if [ ! -d "$HOME/.vim/undo/" ]; then
   fancy_echo "Creating ~/.vim/undo"
   mkdir -p ~/.vim/undo
+fi
+
+if [ ! -d "$HOME/.vim/swap/" ]; then
+  fancy_echo "Creating ~/.vim/swap"
+  mkdir -p ~/.vim/swap
+fi
+
+if [ ! -d "$HOME/.vim/backup/" ]; then
+  fancy_echo "Creating ~/.vim/backup"
+  mkdir -p ~/.vim/backup
 fi
 
 fancy_echo "Symlinking things for neovim"

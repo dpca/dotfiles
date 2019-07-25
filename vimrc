@@ -86,13 +86,20 @@ set colorcolumn=80 " Show column at 80
 set diffopt+=vertical " Always use vertical diffs
 set laststatus=2
 set list listchars=tab:»·,trail:·,nbsp:· " Trailing whitespace
-set nobackup
-set noswapfile
-set nowritebackup
 set number
 set ruler
 set shortmess=atI
 set showcmd
+set signcolumn=yes
+
+" Protect changes between writes
+set swapfile
+set directory^=~/.vim/swap//
+
+set writebackup " Protect against crash during write
+set nobackup " Do not persist backup after successful write
+set backupcopy=auto " Use rename-and-write-new method whenever safe
+set backupdir^=~/.vim/backup//
 
 " Tab settings
 set tabstop=2
@@ -102,7 +109,7 @@ set expandtab
 
 " Persistent undo
 set undofile
-set undodir=~/.vim/undo
+set undodir^=~/.vim/undo//
 set undolevels=1000
 set undoreload=10000
 
