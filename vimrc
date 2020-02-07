@@ -25,7 +25,6 @@ Plug 'ervandew/supertab'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
-"Plug 'ludovicchabant/vim-gutentags'
 Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
 Plug 'mileszs/ack.vim'
@@ -37,25 +36,24 @@ Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/matchit.zip'
-Plug 'w0rp/ale'
 
 " Completion
 Plug 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plug 'amiralies/coc-flow', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+Plug 'neoclide/coc-solargraph', {'do': 'yarn install --frozen-lockfile'}
 
 " Display
 Plug 'altercation/vim-colors-solarized'
 Plug 'bronson/vim-trailing-whitespace'
 Plug 'flazz/vim-colorschemes'
 Plug 'itchyny/lightline.vim'
-Plug 'maximbaz/lightline-ale'
 Plug 'mengelbrecht/lightline-bufferline'
 
 " Git
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-
-" Javascript
-Plug 'pangloss/vim-javascript', { 'for': 'javascript' }
 
 " Typescript
 Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
@@ -160,28 +158,20 @@ if executable('rg')
   let g:ackprg = 'rg --vimgrep'
 endif
 
+" FZF
 nnoremap <C-p> :FZF<CR>
+nmap <Leader>f :GFiles<CR>
+nmap <Leader>F :Files<CR>
+nmap <Leader>b :Buffers<CR>
+nmap <Leader>h :History<CR>
+nmap <Leader>t :BTags<CR>
+nmap <Leader>T :Tags<CR>
+nmap <Leader>l :BLines<CR>
+nmap <Leader>L :Lines<CR>
+nmap <Leader>' :Marks<CR>
+nmap <Leader>/ :Rg<Space>
 
 let g:SuperTabDefaultCompletionType = '<C-n>'
-
-" ALE settings
-"
-"let g:ale_enabled = 0
-let g:ale_linters = {
-\ 'javascript': ['eslint', 'flow'],
-\ 'typescript': ['tslint'],
-\ 'python': ['flake8', 'pylint'],
-\ 'ruby': ['rubocop', 'reek'],
-\}
-let g:ale_fixers = {
-\ 'javascript': ['prettier'],
-\}
-let g:ale_javascript_eslint_use_global = 1
-let g:ale_javascript_prettier_options = '--single-quote --trailing-comma es5'
-let g:ale_lint_delay = 2000
-
-nmap <silent> [v <Plug>(ale_previous_wrap)
-nmap <silent> ]v <Plug>(ale_next_wrap)
 
 " Coc settings
 
@@ -242,10 +232,6 @@ let g:lightline = {
       \   'cocstatus': 'coc#status'
       \ },
       \ 'component_expand': {
-      \   'linter_checking': 'lightline#ale#checking',
-      \   'linter_warnings': 'lightline#ale#warnings',
-      \   'linter_errors': 'lightline#ale#errors',
-      \   'linter_ok': 'lightline#ale#ok',
       \   'buffers': 'lightline#bufferline#buffers',
       \ },
       \ 'component_type': {
@@ -253,12 +239,8 @@ let g:lightline = {
       \ },
       \ }
 
-let g:lightline#ale#indicator_checking = "\uf110"
-let g:lightline#ale#indicator_warnings = "\uf071 "
 let g:coc_status_warning_sign = "\uf071 "
-let g:lightline#ale#indicator_errors = "\uf05e "
 let g:coc_status_error_sign = "\uf05e "
-let g:lightline#ale#indicator_ok = "\uf00c"
 let g:lightline#bufferline#filename_modifier = ':t'
 
 " Gitgutter settings
@@ -274,15 +256,9 @@ autocmd FileType gitcommit setlocal spell
 
 " Javascript settings
 autocmd BufRead,BufNewFile *.es6 setfiletype javascript
-let g:javascript_plugin_flow = 1
 let g:jsx_ext_required = 0 " JSX in js files
 let g:vim_json_syntax_conceal = 0 " Disable hiding quotes for json
-let g:flow#enable = 0 " Disable flow type checking on save
 let g:closetag_filenames = "*.html,*.xhtml,*.phtml,*.php, *.jsx"
-"autocmd FileType javascript set formatprg=prettier\ --stdin\ --parser\ flow\ --single-quote\ --trailing-comma\ es5
-
-" Ruby settings
-autocmd FileType ruby nmap <leader>h :%s/:\([^=,'"]*\) =>/\1:/gc<CR>
 
 " Haskell settings
 autocmd FileType haskell setlocal tabstop=4 shiftwidth=4
