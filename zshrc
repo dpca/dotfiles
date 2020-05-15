@@ -12,12 +12,10 @@ docker
 docker-compose
 fzf
 git
-mix
 node
 npm
 osx
 python
-rbenv
 ruby
 tmux
 yarn
@@ -46,15 +44,7 @@ fi
 
 export PATH="$HOME/.bin:$HOME/.local/bin:$PATH"
 
-# asdf
-source "$HOME/.asdf/asdf.sh"
-source "$HOME/.asdf/completions/asdf.bash"
-
-# Autojump
-[[ -s $(brew --prefix)/etc/profile.d/autojump.sh ]] && . $(brew --prefix)/etc/profile.d/autojump.sh
-
 # fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
 
 # aliases
