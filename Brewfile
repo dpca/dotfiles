@@ -1,7 +1,6 @@
 tap "thoughtbot/formulae"
 tap "universal-ctags/universal-ctags"
-tap "caskroom/cask"
-tap "caskroom/fonts"
+tap "homebrew/cask-fonts"
 
 # OS
 brew "autojump"
