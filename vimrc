@@ -152,9 +152,9 @@ if $SSH_CONNECTION
 endif
 colorscheme solarized
 
-" Use The Silver Searcher https://github.com/ggreer/the_silver_searcher
+" Use ripgrep
 if executable('rg')
-  set grepprg=rg\ --nogroup\ --nocolor " Use Ag over Grep
+  set grepprg=rg\ --nogroup\ --nocolor " Use rg over Grep
   let g:ackprg = 'rg --vimgrep'
 endif
 

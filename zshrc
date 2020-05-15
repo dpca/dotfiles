@@ -66,5 +66,11 @@ timetrap_lib=$(gem which timetrap)
 timetrap=$(dirname $(dirname "${timetrap_lib}"))
 fpath=("$timetrap/completions/zsh" $fpath)
 
+# Python certs
+export REQUESTS_CA_BUNDLE=/usr/local/etc/openssl/cert.pem
+
+# Docker
+export COMPOSE_DOCKER_CLI_BUILD=1
+
 autoload -U compinit
 compinit
