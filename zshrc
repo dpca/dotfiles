@@ -30,6 +30,9 @@ yarn
 
 export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 
+# For pip installing psycopg2
+export LDFLAGS='-L/usr/local/lib -L/usr/local/opt/openssl/lib -L/usr/local/opt/readline/lib'
+
 source $ZSH/oh-my-zsh.sh
 
 # Load .env file if it exists
@@ -56,15 +59,10 @@ export FZF_DEFAULT_COMMAND='rg --files --hidden'
 
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
-export PATH="/usr/local/opt/openssl/bin:$PATH"
-
-# completions
-timetrap_lib=$(gem which timetrap)
-timetrap=$(dirname $(dirname "${timetrap_lib}"))
-fpath=("$timetrap/completions/zsh" $fpath)
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 
 # Python certs
-export REQUESTS_CA_BUNDLE=/usr/local/etc/openssl/cert.pem
+export REQUESTS_CA_BUNDLE=/usr/local/etc/openssl@1.1/cert.pem
 
 # Docker
 export COMPOSE_DOCKER_CLI_BUILD=1
