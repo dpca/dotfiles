@@ -13,7 +13,7 @@ alias docker-remove-exited='docker rm -v $(docker ps -a -q -f status=exited)'
 alias docker-remove-dangling='docker rmi $(docker images -f "dangling=true" -q)'
 alias docker-remove-untagged='docker rmi $(docker images | grep "^<none>" | awk "{print $3}")'
 alias docker-remove-stopped='docker rm $(docker ps -qa)'
-alias docker-gc='docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v /etc:/etc spotify/docker-gc'
+alias docker-gc='docker system prune --volumes'
 
 # git
 alias gupc='gup && git-delete-merged'
