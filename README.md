@@ -14,19 +14,6 @@ git clone git@github.com:dpca/dotfiles.git ~/dotfiles
 
 Run `rcup` after adding new files to the directory to properly symlink them.
 
-## Other apps
-
-* Firefox
-* OmniFocus
-* Tweetbot
-* Slack
-* iTerm
-* SourceTree
-* 1Password
-* Docker for Mac
-* Alfred
-* Viscosity
-
 ## Settings
 
 * System
@@ -41,7 +28,9 @@ Run `rcup` after adding new files to the directory to properly symlink them.
   * App Expose: Down w/ 4 fingers
 
 * Terminal
-  * Font: [Hack](https://github.com/source-foundry/Hack) 11pt.
+  * [Dracula](https://draculatheme.com/) color theme
+  * [Powerlevel10k](https://github.com/romkatv/powerlevel10k) zsh theme
+    * Meslo Nerd Font patched for Powerlevel10k
   * Use option as Meta key
 
 ## Acknowledgements
