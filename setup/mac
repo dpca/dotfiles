@@ -178,7 +178,7 @@ fancy_echo "Installing latest python..."
 install_asdf_language "python"
 
 fancy_echo "Installing python libraries..."
-pip3 install --user --upgrade awscli neovim flake8
+pip3 install --user --upgrade neovim flake8
 
 asdf reshim python
 
