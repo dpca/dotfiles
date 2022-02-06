@@ -36,7 +36,7 @@ export LDFLAGS='-L/usr/local/lib -L/usr/local/opt/openssl/lib -L/usr/local/opt/r
 source $ZSH/oh-my-zsh.sh
 
 # Load .env file if it exists
-[ -f ~/dotfiles/.env ] && source ~/dotfiles/.env
+[ -f ~/.env ] && source ~/.env
 
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vi'
