@@ -54,14 +54,19 @@ fi
 
 export PATH="$HOME/.bin:$HOME/.local/bin:$PATH"
 
+if [[ -d "$HOME/.workbin" ]]; then
+  export PATH="$HOME/.workbin:$PATH"
+fi
+
 # fzf
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
 
 # aliases
 [[ -f ~/.aliases ]] && source ~/.aliases
-export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
+[[ -f ~/.workaliases ]] && source ~/.workaliases
 
 # Python certs
+export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
 export REQUESTS_CA_BUNDLE=/usr/local/etc/openssl@1.1/cert.pem
 
 # Docker
