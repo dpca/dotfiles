@@ -21,18 +21,16 @@ call plug#begin('~/.vim/bundle')
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'docunext/closetag.vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'ervandew/supertab'
 Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
 Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'majutsushi/tagbar'
 Plug 'mbbill/undotree'
-Plug 'mileszs/ack.vim'
-Plug 'scrooloose/nerdcommenter'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+Plug 'preservim/nerdcommenter'
+Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
+Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/matchit.zip'
@@ -41,39 +39,41 @@ Plug 'vim-scripts/matchit.zip'
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
 Plug 'amiralies/coc-flow', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-python', {'do': 'yarn install --frozen-lockfile'}
+Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-solargraph', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
+Plug 'ruanyl/coc-apollo', {'do': 'yarn install --frozen-lockfile', 'for': ['typescript', 'typescriptreact']}
 
 " Display
-Plug 'altercation/vim-colors-solarized'
 Plug 'bronson/vim-trailing-whitespace'
-Plug 'flazz/vim-colorschemes'
 Plug 'itchyny/lightline.vim'
 Plug 'mengelbrecht/lightline-bufferline'
+Plug 'junegunn/goyo.vim'
+Plug 'dracula/vim', { 'as': 'dracula' }
 
 " Git
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
 
 " Typescript
-Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+"Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
+"Plug 'ianks/vim-tsx', { 'for': 'typescriptreact' }
 
 " Ruby
-Plug 'tpope/vim-rails', { 'for': 'ruby' }
-Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
+"Plug 'tpope/vim-rails', { 'for': 'ruby' }
+"Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
 
 " Haskell
-Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
+"Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
 
 " Elm
-Plug 'elmcast/elm-vim', { 'for': 'elm' }
+"Plug 'elmcast/elm-vim', { 'for': 'elm' }
 
 " Reason
-Plug 'reasonml-editor/vim-reason-plus', { 'for': 'reason' }
+"Plug 'reasonml-editor/vim-reason-plus', { 'for': 'reason' }
 
 " Templating, markdown, etc.
-Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+"Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -90,6 +90,7 @@ set ruler
 set shortmess=atI
 set showcmd
 set signcolumn=yes
+set splitbelow " Preview window on bottom
 
 " Protect changes between writes
 set swapfile
@@ -144,14 +145,12 @@ nnoremap <leader><leader> <c-^> " Switch between the last two files
 xmap ga <Plug>(EasyAlign)
 nmap ga <Plug>(EasyAlign)
 
-" Solarized color scheme
+" Color scheme
 syntax enable
-set background=dark
-if $SSH_CONNECTION
-  let g:solarized_termcolors=256
-  let g:solarized_termtrans=1
+if (has("termguicolors"))
+  set termguicolors
 endif
-colorscheme solarized
+color dracula
 
 " Use ripgrep
 if executable('rg')
@@ -160,7 +159,7 @@ if executable('rg')
 endif
 
 " FZF
-nnoremap <C-p> :FZF<CR>
+nnoremap <C-p> :Files<CR>
 nmap <Leader>f :GFiles<CR>
 nmap <Leader>F :Files<CR>
 nmap <Leader>b :Buffers<CR>
@@ -172,20 +171,40 @@ nmap <Leader>L :Lines<CR>
 nmap <Leader>' :Marks<CR>
 nmap <Leader>/ :Rg<Space>
 
-let g:SuperTabDefaultCompletionType = '<C-n>'
+command! -bang -nargs=? -complete=dir Files
+    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
+
+"let g:SuperTabDefaultCompletionType = '<C-n>'
 
 " Coc settings
 
+set encoding=utf-8
 set hidden " Required for operations modifying multiple buffers like rename.
 set showtabline=2 " Always show tabline
 set shortmess+=c " don't give |ins-completion-menu| messages.
 
-" Use <c-space> for trigger completion.
-inoremap <silent><expr> <c-space> coc#refresh()
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
 
-" Use `[c` and `]c` for navigate diagnostics
-nmap <silent> [c <Plug>(coc-diagnostic-prev)
-nmap <silent> ]c <Plug>(coc-diagnostic-next)
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+if has('nvim')
+  inoremap <silent><expr> <c-space> coc#refresh()
+else
+  inoremap <silent><expr> <c-@> coc#refresh()
+endif
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
 
 " Remap keys for gotos
 nmap <silent> gd <Plug>(coc-definition)
@@ -194,14 +213,30 @@ nmap <silent> gi <Plug>(coc-implementation)
 nmap <silent> gr <Plug>(coc-references)
 
 " Use K for show documentation in preview window
+nnoremap <silent> K :call <SID>show_documentation()<CR>
 nnoremap <silent> <leader><space> :call <SID>show_documentation()<CR>
+
 function! s:show_documentation()
-  if &filetype == 'vim'
+  if (index(['vim','help'], &filetype) >= 0)
     execute 'h '.expand('<cword>')
-  else
+  elseif (coc#rpc#ready())
     call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . " " . expand('<cword>')
   endif
 endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+"nnoremap <silent> <leader><space> :call <SID>show_hover()<CR>
+"function! s:show_hover()
+  "if (index(['vim','help'], &filetype) >= 0)
+    "execute 'h '.expand('<cword>')
+  "else
+    "call CocActionAsync('doHover')
+  "endif
+"endfunction
 
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
@@ -209,7 +244,7 @@ nmap <leader>rn <Plug>(coc-rename)
 " Lightline settings
 
 let g:lightline = {
-      \ 'colorscheme': 'solarized',
+      \ 'colorscheme': 'dracula',
       \ 'active': {
       \   'left':  [
       \     [ 'mode', 'paste' ],
@@ -247,9 +282,6 @@ let g:lightline#bufferline#filename_modifier = ':t'
 " Gitgutter settings
 let g:gitgutter_max_signs = 10000
 
-" Tagbar
-nmap <F8> :TagbarToggle<CR>
-
 " Turn on spell checking for certain files
 autocmd Bufread,BufNewFile *.md setlocal spell
 autocmd Bufread,BufNewFile *.rst setlocal spell
@@ -270,3 +302,14 @@ autocmd FileType elm setlocal tabstop=4 shiftwidth=4
 " Markdown settings
 let g:vim_markdown_folding_disabled = 1
 autocmd FileType rst normal zR
+
+function! s:goyo_enter()
+  CocDisable
+endfunction
+
+function! s:goyo_leave()
+  CocEnable
+endfunction
+
+autocmd! User GoyoEnter nested call <SID>goyo_enter()
+autocmd! User GoyoLeave nested call <SID>goyo_leave()
