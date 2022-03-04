@@ -21,12 +21,12 @@ call plug#begin('~/.vim/bundle')
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'docunext/closetag.vim'
 Plug 'editorconfig/editorconfig-vim'
-Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-Plug 'junegunn/fzf.vim'
+"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
+"Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'mbbill/undotree'
 Plug 'preservim/nerdcommenter'
-Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
+"Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
@@ -34,6 +34,7 @@ Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/matchit.zip'
+Plug 'nvim-lua/plenary.nvim'
 
 " Completion
 Plug 'neoclide/coc.nvim', {'branch': 'release'}
@@ -42,38 +43,24 @@ Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
 Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-solargraph', {'do': 'yarn install --frozen-lockfile'}
 Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-Plug 'ruanyl/coc-apollo', {'do': 'yarn install --frozen-lockfile', 'for': ['typescript', 'typescriptreact']}
+"Plug 'ruanyl/coc-apollo', {'do': 'yarn install --frozen-lockfile', 'for': ['typescript', 'typescriptreact']}
 
 " Display
-Plug 'bronson/vim-trailing-whitespace'
-Plug 'itchyny/lightline.vim'
-Plug 'mengelbrecht/lightline-bufferline'
-Plug 'junegunn/goyo.vim'
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'bronson/vim-trailing-whitespace'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'akinsho/bufferline.nvim'
+Plug 'feline-nvim/feline.nvim'
+Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+
+" Navigation
+Plug 'kyazdani42/nvim-tree.lua'
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
 " Git
-Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
-
-" Typescript
-"Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-"Plug 'ianks/vim-tsx', { 'for': 'typescriptreact' }
-
-" Ruby
-"Plug 'tpope/vim-rails', { 'for': 'ruby' }
-"Plug 'vim-scripts/ruby-matchit', { 'for': 'ruby' }
-
-" Haskell
-"Plug 'neovimhaskell/haskell-vim', { 'for': 'haskell' }
-
-" Elm
-"Plug 'elmcast/elm-vim', { 'for': 'elm' }
-
-" Reason
-"Plug 'reasonml-editor/vim-reason-plus', { 'for': 'reason' }
-
-" Templating, markdown, etc.
-"Plug 'plasticboy/vim-markdown', { 'for': 'markdown' }
+Plug 'lewis6991/gitsigns.nvim'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -123,10 +110,6 @@ set smartcase
 " This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
 
-" Tag completion using excuberant ctags
-set tags=tags;/
-set wildignore+=*/tmp/*,*.so,*.swp,*.zip*/.git/*,*/.bundle/*,*/coverage/*,*/public/*,*/log/*,*/vendor/*,*/doc/*,*.o,*.obj,.git,node_modules/**,bower_components/**,**/node_modules/**,_build/**,deps/**,*.beam
-
 " Move around windows with Ctrl and movement keys
 map <C-j> <C-W>j
 map <C-k> <C-W>k
@@ -138,7 +121,9 @@ nnoremap <C-e> 3<C-e>
 nnoremap <C-y> 3<C-y>
 
 nmap <leader>hs :let @/=""<CR>
-map <leader>n :NERDTreeToggle<CR> " leader-n for NERDTree
+nnoremap <C-n> :NvimTreeToggle<CR>
+nnoremap <leader>r :NvimTreeRefresh<CR>
+nnoremap <leader>n :NvimTreeFindFile<CR>
 nnoremap <leader><leader> <c-^> " Switch between the last two files
 
 " EasyAlign settings
@@ -147,9 +132,7 @@ nmap ga <Plug>(EasyAlign)
 
 " Color scheme
 syntax enable
-if (has("termguicolors"))
-  set termguicolors
-endif
+set termguicolors
 color dracula
 
 " Use ripgrep
@@ -158,23 +141,8 @@ if executable('rg')
   let g:ackprg = 'rg --vimgrep'
 endif
 
-" FZF
-nnoremap <C-p> :Files<CR>
-nmap <Leader>f :GFiles<CR>
-nmap <Leader>F :Files<CR>
-nmap <Leader>b :Buffers<CR>
-nmap <Leader>h :History<CR>
-nmap <Leader>t :BTags<CR>
-nmap <Leader>T :Tags<CR>
-nmap <Leader>l :BLines<CR>
-nmap <Leader>L :Lines<CR>
-nmap <Leader>' :Marks<CR>
-nmap <Leader>/ :Rg<Space>
-
-command! -bang -nargs=? -complete=dir Files
-    \ call fzf#vim#files(<q-args>, fzf#vim#with_preview(), <bang>0)
-
-"let g:SuperTabDefaultCompletionType = '<C-n>'
+" Telescope
+nnoremap <C-p> <cmd>Telescope find_files<CR>
 
 " Coc settings
 
@@ -241,47 +209,6 @@ autocmd CursorHold * silent call CocActionAsync('highlight')
 " Remap for rename current word
 nmap <leader>rn <Plug>(coc-rename)
 
-" Lightline settings
-
-let g:lightline = {
-      \ 'colorscheme': 'dracula',
-      \ 'active': {
-      \   'left':  [
-      \     [ 'mode', 'paste' ],
-      \     [ 'gitbranch', 'modified' ],
-      \     [ 'filename' ],
-      \     [ 'cocstatus' ],
-      \   ],
-      \   'right': [
-      \     [ 'lineinfo' ],
-      \     [ 'percent' ],
-      \     [ 'fileformat', 'fileencoding', 'filetype' ],
-      \     [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_ok' ],
-      \   ],
-      \ },
-      \ 'tabline': {
-      \   'left': [ [ 'buffers' ] ],
-      \   'right': [ [ ] ],
-      \ },
-      \ 'component_function': {
-      \   'gitbranch': 'fugitive#head',
-      \   'cocstatus': 'coc#status'
-      \ },
-      \ 'component_expand': {
-      \   'buffers': 'lightline#bufferline#buffers',
-      \ },
-      \ 'component_type': {
-      \   'buffers': 'tabsel',
-      \ },
-      \ }
-
-let g:coc_status_warning_sign = "\uf071 "
-let g:coc_status_error_sign = "\uf05e "
-let g:lightline#bufferline#filename_modifier = ':t'
-
-" Gitgutter settings
-let g:gitgutter_max_signs = 10000
-
 " Turn on spell checking for certain files
 autocmd Bufread,BufNewFile *.md setlocal spell
 autocmd Bufread,BufNewFile *.rst setlocal spell
@@ -303,13 +230,16 @@ autocmd FileType elm setlocal tabstop=4 shiftwidth=4
 let g:vim_markdown_folding_disabled = 1
 autocmd FileType rst normal zR
 
-function! s:goyo_enter()
-  CocDisable
-endfunction
-
-function! s:goyo_leave()
-  CocEnable
-endfunction
-
-autocmd! User GoyoEnter nested call <SID>goyo_enter()
-autocmd! User GoyoLeave nested call <SID>goyo_leave()
+lua << EOF
+require("bufferline").setup{}
+require('feline').setup()
+require('nvim-tree').setup{}
+require('gitsigns').setup()
+require('telescope').load_extension('fzf')
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained",
+  highlight = {
+    enable = true
+  }
+}
+EOF
