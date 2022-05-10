@@ -21,12 +21,9 @@ call plug#begin('~/.vim/bundle')
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'docunext/closetag.vim'
 Plug 'editorconfig/editorconfig-vim'
-"Plug 'junegunn/fzf', { 'dir': '~/.fzf', 'do': './install --all' }
-"Plug 'junegunn/fzf.vim'
 Plug 'junegunn/vim-easy-align'
 Plug 'mbbill/undotree'
 Plug 'preservim/nerdcommenter'
-"Plug 'preservim/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
@@ -37,13 +34,15 @@ Plug 'vim-scripts/matchit.zip'
 Plug 'nvim-lua/plenary.nvim'
 
 " Completion
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'amiralies/coc-flow', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-json', {'do': 'yarn install --frozen-lockfile'}
-Plug 'fannheyward/coc-pyright', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-solargraph', {'do': 'yarn install --frozen-lockfile'}
-Plug 'neoclide/coc-tsserver', {'do': 'yarn install --frozen-lockfile'}
-"Plug 'ruanyl/coc-apollo', {'do': 'yarn install --frozen-lockfile', 'for': ['typescript', 'typescriptreact']}
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/cmp-path'
+Plug 'hrsh7th/cmp-cmdline'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'onsails/lspkind-nvim'
 
 " Display
 Plug 'dracula/vim', { 'as': 'dracula' }
@@ -52,6 +51,7 @@ Plug 'kyazdani42/nvim-web-devicons'
 Plug 'akinsho/bufferline.nvim'
 Plug 'feline-nvim/feline.nvim'
 Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
+Plug 'folke/trouble.nvim'
 
 " Navigation
 Plug 'kyazdani42/nvim-tree.lua'
@@ -62,11 +62,17 @@ Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'tpope/vim-fugitive'
 Plug 'lewis6991/gitsigns.nvim'
 
+" Languages
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
+Plug 'vim-ruby/vim-ruby'
+
 " All of your Plugins must be added before the following line
 call plug#end()
 
 let mapleader = ";" " Leader
 
+set autoread
 set backspace=2   " Make backspace behave like in other programs
 set colorcolumn=80 " Show column at 80
 set diffopt+=vertical " Always use vertical diffs
@@ -97,8 +103,6 @@ set expandtab
 " Persistent undo
 set undofile
 set undodir^=~/.vim/undo//
-set undolevels=1000
-set undoreload=10000
 
 " Search settings
 set incsearch
@@ -141,8 +145,11 @@ if executable('rg')
   let g:ackprg = 'rg --vimgrep'
 endif
 
+" Trouble
+nnoremap <leader>x <cmd>TroubleToggle<cr>
+
 " Telescope
-nnoremap <C-p> <cmd>Telescope find_files<CR>
+nnoremap <C-p> :lua require('telescope.builtin').find_files({layout_strategy='vertical'})<cr>
 
 " Coc settings
 
@@ -150,64 +157,6 @@ set encoding=utf-8
 set hidden " Required for operations modifying multiple buffers like rename.
 set showtabline=2 " Always show tabline
 set shortmess+=c " don't give |ins-completion-menu| messages.
-
-inoremap <silent><expr> <TAB>
-      \ pumvisible() ? "\<C-n>" :
-      \ <SID>check_back_space() ? "\<TAB>" :
-      \ coc#refresh()
-inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
-
-function! s:check_back_space() abort
-  let col = col('.') - 1
-  return !col || getline('.')[col - 1]  =~# '\s'
-endfunction
-
-" Use <c-space> to trigger completion.
-if has('nvim')
-  inoremap <silent><expr> <c-space> coc#refresh()
-else
-  inoremap <silent><expr> <c-@> coc#refresh()
-endif
-
-" Use `[g` and `]g` to navigate diagnostics
-" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
-nmap <silent> [g <Plug>(coc-diagnostic-prev)
-nmap <silent> ]g <Plug>(coc-diagnostic-next)
-
-" Remap keys for gotos
-nmap <silent> gd <Plug>(coc-definition)
-nmap <silent> gy <Plug>(coc-type-definition)
-nmap <silent> gi <Plug>(coc-implementation)
-nmap <silent> gr <Plug>(coc-references)
-
-" Use K for show documentation in preview window
-nnoremap <silent> K :call <SID>show_documentation()<CR>
-nnoremap <silent> <leader><space> :call <SID>show_documentation()<CR>
-
-function! s:show_documentation()
-  if (index(['vim','help'], &filetype) >= 0)
-    execute 'h '.expand('<cword>')
-  elseif (coc#rpc#ready())
-    call CocActionAsync('doHover')
-  else
-    execute '!' . &keywordprg . " " . expand('<cword>')
-  endif
-endfunction
-
-" Highlight the symbol and its references when holding the cursor.
-autocmd CursorHold * silent call CocActionAsync('highlight')
-
-"nnoremap <silent> <leader><space> :call <SID>show_hover()<CR>
-"function! s:show_hover()
-  "if (index(['vim','help'], &filetype) >= 0)
-    "execute 'h '.expand('<cword>')
-  "else
-    "call CocActionAsync('doHover')
-  "endif
-"endfunction
-
-" Remap for rename current word
-nmap <leader>rn <Plug>(coc-rename)
 
 " Turn on spell checking for certain files
 autocmd Bufread,BufNewFile *.md setlocal spell
@@ -237,9 +186,157 @@ require('nvim-tree').setup{}
 require('gitsigns').setup()
 require('telescope').load_extension('fzf')
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained",
+  ensure_installed = {
+    "haskell",
+    "javascript",
+    "json",
+    "lua",
+    "python",
+    "ruby",
+    "toml",
+    "typescript",
+    "vim",
+    "yaml",
+  },
+  sync_install = false,
   highlight = {
     enable = true
   }
 }
+require("trouble").setup{}
+
+-- Setup nvim-cmp.
+local cmp = require'cmp'
+local lspkind = require('lspkind')
+
+local has_words_before = function()
+  local line, col = unpack(vim.api.nvim_win_get_cursor(0))
+  return col ~= 0 and vim.api.nvim_buf_get_lines(0, line - 1, line, true)[1]:sub(col, col):match("%s") == nil
+end
+
+local feedkey = function(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
+
+cmp.setup({
+  formatting = {
+    format = lspkind.cmp_format({with_text = false, maxwidth = 50})
+  },
+  snippet = {
+    expand = function(args)
+      vim.fn["vsnip#anonymous"](args.body)
+    end,
+  },
+  mapping = {
+    ['<C-b>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+    ['<C-f>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+    ['<C-Space>'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
+    ['<C-y>'] = cmp.config.disable, -- Specify `cmp.config.disable` if you want to remove the default `<C-y>` mapping.
+    ['<C-e>'] = cmp.mapping({
+      i = cmp.mapping.abort(),
+      c = cmp.mapping.close(),
+    }),
+    ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
+
+    ["<Tab>"] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.select_next_item()
+      elseif vim.fn["vsnip#available"](1) == 1 then
+        feedkey("<Plug>(vsnip-expand-or-jump)", "")
+      elseif has_words_before() then
+        cmp.complete()
+      else
+        fallback() -- The fallback function sends a already mapped key. In this case, it's probably `<Tab>`.
+      end
+    end, { "i", "s" }),
+
+    ["<S-Tab>"] = cmp.mapping(function()
+      if cmp.visible() then
+        cmp.select_prev_item()
+      elseif vim.fn["vsnip#jumpable"](-1) == 1 then
+        feedkey("<Plug>(vsnip-jump-prev)", "")
+      end
+    end, { "i", "s" }),
+  },
+  sources = cmp.config.sources({
+    { name = 'nvim_lsp' },
+    { name = 'vsnip' },
+  }, {
+    { name = 'buffer' },
+  })
+})
+
+-- Use buffer source for `/` (if you enabled `native_menu`, this won't work anymore).
+cmp.setup.cmdline('/', {
+  sources = {
+    { name = 'buffer' }
+  }
+})
+
+-- Use cmdline & path source for ':' (if you enabled `native_menu`, this won't work anymore).
+-- cmp.setup.cmdline(':', {
+--  sources = cmp.config.sources({
+--    { name = 'path' }
+--  }, {
+--    { name = 'cmdline' }
+--  })
+--})
+
+-- Setup lspconfig.
+local opts = { noremap=true, silent=true }
+vim.api.nvim_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+vim.api.nvim_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+vim.api.nvim_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+
+local on_attach = function(client, bufnr)
+  -- Enable completion
+  vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
+
+  -- Key mappings
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><space>', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+end
+
+vim.o.updatetime = 250
+vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = true,
+  float = { border = "single" },
+})
+
+local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+
+local servers = {
+  "bashls",
+  "cssls",
+  "eslint",
+  "flow",
+  "html",
+  "jsonls",
+  "pyright",
+  "solargraph",
+}
+
+for _, lsp in ipairs(servers) do
+  require'lspconfig'[lsp].setup({
+    on_attach = on_attach,
+    capabilities = capabilities,
+    flags = {
+      debounce_text_changes = 150,
+    }
+  })
+end
+
+require'lspconfig'.tsserver.setup({
+  filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
+  on_attach = on_attach,
+  capabilities = capabilities,
+  flags = {
+    debounce_text_changes = 150,
+  }
+})
 EOF
