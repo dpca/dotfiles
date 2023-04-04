@@ -1,7 +1,0 @@
-#!/usr/bin/env bash
-
-ACCTNAME=$1
-
-ACCT=$(aws organizations list-accounts | jq ".Accounts[] | select(.Name==\"$ACCTNAME\") | .Id" | sed -e 's/\"//g')
-
-echo "$ACCT"
