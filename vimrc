@@ -32,6 +32,7 @@ Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
 Plug 'vim-scripts/matchit.zip'
 Plug 'nvim-lua/plenary.nvim'
+Plug 'AndrewRadev/splitjoin.vim'
 
 " Completion
 Plug 'neovim/nvim-lspconfig'
@@ -46,7 +47,6 @@ Plug 'onsails/lspkind-nvim'
 
 " Display
 Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'bronson/vim-trailing-whitespace'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'akinsho/bufferline.nvim'
 Plug 'feline-nvim/feline.nvim'
@@ -66,6 +66,7 @@ Plug 'lewis6991/gitsigns.nvim'
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'vim-ruby/vim-ruby'
+Plug 'NoahTheDuke/vim-just'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -178,6 +179,9 @@ autocmd FileType elm setlocal tabstop=4 shiftwidth=4
 " Markdown settings
 let g:vim_markdown_folding_disabled = 1
 autocmd FileType rst normal zR
+
+highlight ExtraWhitespace ctermbg=red guibg=red
+match ExtraWhitespace /\s\+$/
 
 lua << EOF
 require("bufferline").setup{}
@@ -295,20 +299,21 @@ local on_attach = function(client, bufnr)
   -- Key mappings
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gd', '<cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><space>', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  vim.api.nvim_buf_set_keymap(bufnr, 'n', 'K', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
   vim.api.nvim_buf_set_keymap(bufnr, 'n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader><space>', '<cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>j', '<cmd>lua vim.diagnostic.open_float(nil, {focus=false})<CR>', opts)
+  vim.api.nvim_buf_set_keymap(bufnr, 'n', '<leader>f', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
 end
 
 vim.o.updatetime = 250
-vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
+-- vim.cmd [[autocmd CursorHold,CursorHoldI * lua vim.diagnostic.open_float(nil, {focus=false})]]
 vim.diagnostic.config({
   virtual_text = false,
   signs = true,
   float = { border = "single" },
 })
 
-local capabilities = require('cmp_nvim_lsp').update_capabilities(vim.lsp.protocol.make_client_capabilities())
+local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
 local servers = {
   "bashls",
@@ -339,4 +344,15 @@ require'lspconfig'.tsserver.setup({
     debounce_text_changes = 150,
   }
 })
+
+require('lspconfig').ruff_lsp.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
+  init_options = {
+    settings = {
+      -- Any extra CLI arguments for `ruff` go here.
+      args = {},
+    }
+  }
+}
 EOF

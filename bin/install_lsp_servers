@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+# Installs LSP servers for neovim, useful after updating asdf language versions
+
+set -e
+
+npm i -g \
+  bash-language-server \
+  typescript \
+  typescript-language-server \
+  vscode-langservers-extracted
+
+asdf reshim nodejs
+
+gem install \
+  solargraph \
+  standard \
+  rubocop-graphql \
+  rubocop-rails \
+  rubocop-rspec
+
+pip3 install pyright ruff-lsp
+
+asdf reshim python
