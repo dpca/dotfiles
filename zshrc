@@ -74,7 +74,9 @@ export COMPOSE_DOCKER_CLI_BUILD=1
 
 export BAT_THEME="Dracula"
 
-autoload -U compinit
+fpath+=~/.zfunc
+autoload zmv
+autoload -Uz compinit
 compinit
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
