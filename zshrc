@@ -41,7 +41,7 @@ source $ZSH/oh-my-zsh.sh
 if [[ -n $SSH_CONNECTION ]]; then
   export EDITOR='vi'
 else
-  export EDITOR='vim'
+  export EDITOR='nvim'
 fi
 
 # Less
@@ -56,6 +56,11 @@ export PATH="$HOME/.bin:$HOME/.local/bin:$PATH"
 
 if [[ -d "$HOME/.workbin" ]]; then
   export PATH="$HOME/.workbin:$PATH"
+fi
+
+# Go
+if [[ -d "$HOME/go/bin" ]]; then
+  export PATH="$HOME/go/bin:$PATH"
 fi
 
 # fzf
@@ -84,3 +89,4 @@ compinit
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
