@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+crane manifest --platform linux/amd64 "$1" | jq '.config.size + ([.layers[].size] | add)' | numfmt --to=iec
