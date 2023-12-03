@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
 # Delete local merged branches
-git branch --merged | grep -E -v "(^\*|master)" | xargs git branch -d
+git branch --merged | grep -E -v "(^\*|master|main)" | xargs git branch -d
 # Delete references to remote branches that no longer exist
 git remote prune origin
