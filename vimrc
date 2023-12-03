@@ -54,7 +54,7 @@ Plug 'nvim-treesitter/nvim-treesitter', {'do': ':TSUpdate'}
 Plug 'folke/trouble.nvim'
 
 " Navigation
-Plug 'kyazdani42/nvim-tree.lua'
+Plug 'nvim-tree/nvim-tree.lua'
 Plug 'nvim-telescope/telescope.nvim'
 Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 
@@ -67,6 +67,7 @@ Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'vim-ruby/vim-ruby'
 Plug 'NoahTheDuke/vim-just'
+Plug 'glench/vim-jinja2-syntax'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -150,7 +151,7 @@ endif
 nnoremap <leader>x <cmd>TroubleToggle<cr>
 
 " Telescope
-nnoremap <C-p> :lua require('telescope.builtin').find_files({layout_strategy='vertical'})<cr>
+nnoremap <C-p> :lua require('telescope.builtin').find_files({layout_strategy='vertical',find_command={'rg', '--files', '--hidden'}})<cr>
 
 " Coc settings
 
@@ -179,6 +180,13 @@ autocmd FileType elm setlocal tabstop=4 shiftwidth=4
 " Markdown settings
 let g:vim_markdown_folding_disabled = 1
 autocmd FileType rst normal zR
+
+" Helm settings
+autocmd BufRead,BufNewFile */templates/*.yml set ft=helm
+
+" Terraform settings
+autocmd BufWritePre *.tfvars lua vim.lsp.buf.format()
+autocmd BufWritePre *.tf lua vim.lsp.buf.format()
 
 highlight ExtraWhitespace ctermbg=red guibg=red
 match ExtraWhitespace /\s\+$/
@@ -321,6 +329,7 @@ local servers = {
   "eslint",
   "flow",
   "html",
+  "hls",
   "jsonls",
   "pyright",
   "solargraph",
@@ -354,5 +363,48 @@ require('lspconfig').ruff_lsp.setup {
       args = {},
     }
   }
+}
+
+require'lspconfig'.hls.setup{
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+require'lspconfig'.rust_analyzer.setup{
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+require('lspconfig').terraformls.setup{
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+require'lspconfig'.ansiblels.setup{
+  on_attach = on_attach,
+  capabilities = capabilities,
+}
+
+require'lspconfig'.jsonnet_ls.setup{
+  on_attach = on_attach,
+  capabilities = capabilities,
+  settings = {
+    ext_vars = {},
+    formatting = {
+      -- default values
+      Indent              = 2,
+      MaxBlankLines       = 2,
+      StringStyle         = 'single',
+      CommentStyle        = 'slash',
+      PrettyFieldNames    = true,
+      PadArrays           = false,
+      PadObjects          = true,
+      SortImports         = true,
+      UseImplicitPlus     = true,
+      StripEverything     = false,
+      StripComments       = false,
+      StripAllButComments = false,
+    },
+  },
 }
 EOF
