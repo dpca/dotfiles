@@ -8,7 +8,8 @@ npm i -g \
   bash-language-server \
   typescript \
   typescript-language-server \
-  vscode-langservers-extracted
+  vscode-langservers-extracted \
+  @ansible/ansible-language-server
 
 asdf reshim nodejs
 
@@ -19,6 +20,14 @@ gem install \
   rubocop-rails \
   rubocop-rspec
 
-pip3 install pyright ruff-lsp
+pip3 install pyright ruff-lsp ansible-lint
 
 asdf reshim python
+
+brew install hashicorp/tap/terraform-ls
+
+go install github.com/grafana/jsonnet-language-server@latest
+
+# Install Rust Analyzer
+curl -L https://github.com/rust-lang/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-apple-darwin.gz | gunzip -c - > ~/.local/bin/rust-analyzer
+chmod +x ~/.local/bin/rust-analyzer
