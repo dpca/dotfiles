@@ -16,4 +16,7 @@ alias docker-remove-stopped='docker rm $(docker ps -qa)'
 alias docker-gc='docker system prune --volumes'
 
 # git
-alias gupc='gup && git-delete-merged'
+alias gupc='gpr && git-delete-merged'
+
+# rg
+alias rg='rg --hidden'
