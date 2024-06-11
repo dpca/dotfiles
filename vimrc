@@ -18,20 +18,20 @@ endif
 call plug#begin('~/.vim/bundle')
 
 " Support
+Plug 'nvim-lua/plenary.nvim'
+Plug 'airblade/vim-gitgutter'
 Plug 'christoomey/vim-tmux-navigator'
-Plug 'docunext/closetag.vim'
-Plug 'editorconfig/editorconfig-vim'
 Plug 'junegunn/vim-easy-align'
-Plug 'mbbill/undotree'
 Plug 'preservim/nerdcommenter'
-Plug 'sheerun/vim-polyglot'
 Plug 'tpope/vim-endwise'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-sensible'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-unimpaired'
+Plug 'alvan/vim-closetag'
+Plug 'mbbill/undotree'
+Plug 'sheerun/vim-polyglot'
 Plug 'vim-scripts/matchit.zip'
-Plug 'nvim-lua/plenary.nvim'
 Plug 'AndrewRadev/splitjoin.vim'
 
 " Completion
@@ -47,6 +47,7 @@ Plug 'onsails/lspkind-nvim'
 
 " Display
 Plug 'dracula/vim', { 'as': 'dracula' }
+Plug 'bronson/vim-trailing-whitespace'
 Plug 'kyazdani42/nvim-web-devicons'
 Plug 'akinsho/bufferline.nvim'
 Plug 'feline-nvim/feline.nvim'
@@ -68,6 +69,7 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'vim-ruby/vim-ruby'
 Plug 'NoahTheDuke/vim-just'
 Plug 'glench/vim-jinja2-syntax'
+Plug 'simrat39/rust-tools.nvim', { 'for': 'rust' }
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -116,6 +118,10 @@ set smartcase
 " This unsets the "last search pattern" register by hitting return
 nnoremap <CR> :noh<CR><CR>
 
+" Use <Tab> and <S-Tab> to navigate through popup menu
+inoremap <expr> <Tab>   pumvisible() ? "\<C-n>" : "\<Tab>"
+inoremap <expr> <S-Tab> pumvisible() ? "\<C-p>" : "\<S-Tab>"
+
 " Move around windows with Ctrl and movement keys
 map <C-j> <C-W>j
 map <C-k> <C-W>k
@@ -153,8 +159,6 @@ nnoremap <leader>x <cmd>TroubleToggle<cr>
 " Telescope
 nnoremap <C-p> :lua require('telescope.builtin').find_files({layout_strategy='vertical',find_command={'rg', '--files', '--hidden'}})<cr>
 
-" Coc settings
-
 set encoding=utf-8
 set hidden " Required for operations modifying multiple buffers like rename.
 set showtabline=2 " Always show tabline
@@ -188,8 +192,13 @@ autocmd BufRead,BufNewFile */templates/*.yml set ft=helm
 autocmd BufWritePre *.tfvars lua vim.lsp.buf.format()
 autocmd BufWritePre *.tf lua vim.lsp.buf.format()
 
-highlight ExtraWhitespace ctermbg=red guibg=red
-match ExtraWhitespace /\s\+$/
+"highlight ExtraWhitespace ctermbg=red guibg=red
+"match ExtraWhitespace /\s\+$/
+
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
+augroup END
 
 lua << EOF
 require("bufferline").setup{}
@@ -209,6 +218,7 @@ require'nvim-treesitter.configs'.setup {
     "typescript",
     "vim",
     "yaml",
+    "rust",
   },
   sync_install = false,
   highlight = {
@@ -216,6 +226,7 @@ require'nvim-treesitter.configs'.setup {
   }
 }
 require("trouble").setup{}
+local rt = require("rust-tools");
 
 -- Setup nvim-cmp.
 local cmp = require'cmp'
@@ -354,23 +365,18 @@ require'lspconfig'.tsserver.setup({
   }
 })
 
-require('lspconfig').ruff_lsp.setup {
-  on_attach = on_attach,
-  capabilities = capabilities,
-  init_options = {
-    settings = {
-      -- Any extra CLI arguments for `ruff` go here.
-      args = {},
-    }
-  }
-}
+rt.setup({
+  tools = {
+    inlay_hints = {
+      auto = false
+    },
+  },
+  server = {
+    on_attach = on_attach,
+    capabilities = capabilities},
+})
 
 require'lspconfig'.hls.setup{
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-require'lspconfig'.rust_analyzer.setup{
   on_attach = on_attach,
   capabilities = capabilities,
 }
