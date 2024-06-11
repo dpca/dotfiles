@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+
+site1 = ARGV[0]
+site2 = ARGV[1]
+
+unless site1 && site2
+  puts 'Usage: is-dns-equal site1 site2'
+  exit 1
+end
+
+dig1 = `dig #{site1} +short`.split("\n").filter { |u| /^[0-9.]+$/.match?(u) }.sort
+dig2 = `dig #{site2} +short`.split("\n").filter { |u| /^[0-9.]+$/.match?(u) }.sort
+
+if dig1 == dig2
+  puts 'DNS is equal, both sites point to:'
+  dig1.each do |host|
+    puts "  #{host}"
+  end
+else
+  puts 'DNS is not equal...'
+  puts "#{site1} points to:"
+  dig1.each do |host|
+    puts "  #{host}"
+  end
+  puts "#{site2} points to:"
+  dig2.each do |host|
+    puts "  #{host}"
+  end
+end
