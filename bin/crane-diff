@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+diff -u <(crane manifest "$1" | jq) <(crane manifest "$2" | jq) | diff-so-fancy
