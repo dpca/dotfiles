@@ -23,6 +23,7 @@ pipx install pyright ruff ansible-lint
 brew install hashicorp/tap/terraform-ls
 
 go install github.com/grafana/jsonnet-language-server@latest
+go install golang.org/x/tools/gopls@latest
 
 # Install Rust Analyzer
 curl -L https://github.com/rust-lang/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-apple-darwin.gz | gunzip -c - > ~/.local/bin/rust-analyzer

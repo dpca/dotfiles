@@ -70,6 +70,7 @@ Plug 'vim-ruby/vim-ruby'
 Plug 'NoahTheDuke/vim-just'
 Plug 'glench/vim-jinja2-syntax'
 Plug 'simrat39/rust-tools.nvim', { 'for': 'rust' }
+Plug 'ray-x/go.nvim'
 
 " All of your Plugins must be added before the following line
 call plug#end()
@@ -219,6 +220,7 @@ require'nvim-treesitter.configs'.setup {
     "vim",
     "yaml",
     "rust",
+    "go",
   },
   sync_install = false,
   highlight = {
@@ -339,8 +341,9 @@ local servers = {
   "cssls",
   "eslint",
   "flow",
-  "html",
+  "gopls",
   "hls",
+  "html",
   "jsonls",
   "pyright",
   "solargraph",
