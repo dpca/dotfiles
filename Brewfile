@@ -1,12 +1,10 @@
-tap "thoughtbot/formulae"
-tap "universal-ctags/universal-ctags"
 tap "homebrew/cask-fonts"
 
 # OS
 brew "autojump"
 brew "bash"
 brew "cmake"
-brew "exa"
+brew "eza"
 brew "git-delta"
 brew "fzf"
 brew "git"
@@ -18,7 +16,6 @@ brew "reattach-to-user-namespace"
 brew "ripgrep"
 brew "rga" # ripgrep-all
 brew "tmux"
-brew "universal-ctags", args: ["HEAD"]
 brew "watchman"
 brew "zsh"
 cask "qlmarkdown"
@@ -43,7 +40,6 @@ brew "tree"
 # Programming language prerequisites and package managers
 brew "coreutils"
 brew "libyaml" # should come after openssl"
-brew "yarn"
 cask "gpg-suite"
 
 # Databases
