@@ -9,8 +9,8 @@ fi
 export ZSH=~/.oh-my-zsh
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
+
 plugins=(
-asdf
 autojump
 brew
 bundler
@@ -22,6 +22,8 @@ git
 node
 npm
 macos
+mise
+per-directory-history
 python
 ruby
 tmux
@@ -86,6 +88,7 @@ compinit
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f "/Users/dcahoon/.ghcup/env" ] && source "/Users/dcahoon/.ghcup/env" # ghcup-env
+eval "$(uv generate-shell-completion zsh)"
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

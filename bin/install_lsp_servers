@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Installs LSP servers for neovim, useful after updating asdf language versions
+# Installs LSP servers for neovim
 
 set -e
 
@@ -11,8 +11,6 @@ npm i -g \
   vscode-langservers-extracted \
   @ansible/ansible-language-server
 
-asdf reshim nodejs
-
 gem install \
   solargraph \
   standard \
@@ -20,9 +18,7 @@ gem install \
   rubocop-rails \
   rubocop-rspec
 
-pip3 install pyright ruff-lsp ansible-lint
-
-asdf reshim python
+pipx install pyright ruff ansible-lint
 
 brew install hashicorp/tap/terraform-ls
 

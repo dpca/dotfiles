@@ -3,7 +3,7 @@
 Dotfiles and setup scripts to automate macOS setup.
 
 [Homebrew](https://brew.sh/) is used for package management and
-[ASDF](https://github.com/asdf-vm/asdf) for managing programming languages.
+[mise](https://mise.jdx.dev/) for managing programming languages.
 
 ## Install
 

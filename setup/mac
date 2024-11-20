@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+# Script to set up or update a Mac from scratch
+
 # ----------------------------------------------------------------------------
 # Functions
 # ----------------------------------------------------------------------------
@@ -27,37 +29,18 @@ gem_install_or_update() {
   fi
 }
 
-npm_install_with_peer_deps() {
-  npm info "$1@latest" peerDependencies --json \
-    | command sed 's/[\{\},]//g ; s/: /@/g' \
-    | xargs npm install -g "$1@latest"
-}
-
-install_asdf_plugin() {
-  local name="$1"
-  local url="$2"
-
-  if ! asdf plugin-list | grep -Fq "$name"; then
-    asdf plugin-add "$name" "$url"
-  fi
-}
-
-install_asdf_language() {
-  local language="$1"
-  local version
-  version="$(asdf list-all "$language" | grep -v "[a-z]" | tail -1)"
-
-  if ! asdf list "$language" | grep -Fq "$version"; then
-    asdf install "$language" "$version"
-    asdf global "$language" "$version"
-  fi
-}
-
 # Stop execution if a command errors
 set -e
 
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-HOMEBREW_PREFIX="/usr/local"
+
+# Determine Homebrew prefix
+arch="$(uname -m)"
+if [ "$arch" = "arm64" ]; then
+  HOMEBREW_PREFIX="/opt/homebrew"
+else
+  HOMEBREW_PREFIX="/usr/local"
+fi
 
 # ----------------------------------------------------------------------------
 # Terminal
@@ -87,22 +70,13 @@ fi
 # Homebrew
 # ----------------------------------------------------------------------------
 
-if [ -d "$HOMEBREW_PREFIX" ]; then
-  if ! [ -r "$HOMEBREW_PREFIX" ]; then
-    sudo chown -R "$LOGNAME:admin" /usr/local
-  fi
-else
-  sudo mkdir "$HOMEBREW_PREFIX"
-  sudo chflags norestricted "$HOMEBREW_PREFIX"
-  sudo chown -R "$LOGNAME:admin" "$HOMEBREW_PREFIX"
-fi
-
 if ! command -v brew >/dev/null; then
+  # https://brew.sh/
   fancy_echo "Installing Homebrew ..."
-  curl -fsS \
-    'https://raw.githubusercontent.com/Homebrew/install/master/install' | ruby
 
-  export PATH="/usr/local/bin:$PATH"
+  /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+  export PATH="$HOMEBREW_PREFIX/bin:$PATH"
 fi
 
 if brew list | grep -Fq brew-cask; then
@@ -115,72 +89,24 @@ brew update
 brew bundle --file="$DIR/../Brewfile"
 
 # ----------------------------------------------------------------------------
-# ASDF
-# ----------------------------------------------------------------------------
-
-if [ ! -d "$HOME/.asdf/" ]; then
-  fancy_echo "Installing asdf..."
-  git clone https://github.com/asdf-vm/asdf.git ~/.asdf
-fi
-
-source "$HOME/.asdf/asdf.sh"
-
-install_asdf_plugin "nodejs"
-install_asdf_plugin "python"
-install_asdf_plugin "ruby"
-
-# ----------------------------------------------------------------------------
-# Ruby
+# Programming languages
 # ----------------------------------------------------------------------------
 
 fancy_echo "Installing latest ruby..."
-install_asdf_language "ruby"
+mise install ruby@latest
 gem update --system
 gem_install_or_update 'bundler'
 number_of_cores=$(sysctl -n hw.ncpu)
 bundle config --global jobs $((number_of_cores - 1))
 
-fancy_echo "Installing ruby libraries..."
-gem_install_or_update 'rubocop'
-gem_install_or_update 'reek'
-gem_install_or_update 'neovim'
-gem_install_or_update 'rcodetools'
-gem_install_or_update 'fastri'
-gem_install_or_update 'timetrap'
-
-# ----------------------------------------------------------------------------
-# Node
-# ----------------------------------------------------------------------------
-
 fancy_echo "Installing latest node..."
-bash ~/.asdf/plugins/nodejs/bin/import-release-team-keyring
-install_asdf_language "nodejs"
+mise install nodejs@latest
 
-fancy_echo "Installing node modules..."
-npm install -g \
-  babel-eslint \
-  create-react-app \
-  eslint \
-  eslint-plugin-html \
-  flow-bin \
-  neovim \
-  prettier
-npm_install_with_peer_deps eslint-config-airbnb
-npm_install_with_peer_deps eslint-config-react-app
-npm_install_with_peer_deps eslint-config-prettier
-npm_install_with_peer_deps eslint-plugin-flowtype
+fancy_echo "Installing latest Python ..."
+mise install python@latest
 
-# ----------------------------------------------------------------------------
-# Python
-# ----------------------------------------------------------------------------
-
-fancy_echo "Installing latest python..."
-install_asdf_language "python"
-
-fancy_echo "Installing python libraries..."
-pip3 install --user --upgrade neovim flake8
-
-asdf reshim python
+fancy_echo "Installing LSP servers..."
+"$DIR/../bin/install_lsp_servers"
 
 # ----------------------------------------------------------------------------
 # Dotfiles setup
