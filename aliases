@@ -6,14 +6,14 @@ alias sha256sum='shasum --algorithm 256'
 # Pretty print the path
 alias path='echo $PATH | tr -s ":" "\n"'
 
-# Docker
-alias docker-stop-all='docker stop $(docker ps -a -q)'
-alias docker-stop-running='docker stop $(docker ps -q)'
-alias docker-remove-exited='docker rm -v $(docker ps -a -q -f status=exited)'
-alias docker-remove-dangling='docker rmi $(docker images -f "dangling=true" -q)'
-alias docker-remove-untagged='docker rmi $(docker images | grep "^<none>" | awk "{print $3}")'
-alias docker-remove-stopped='docker rm $(docker ps -qa)'
-alias docker-gc='docker system prune --volumes'
+# Podman
+alias podman-stop-all='podman stop $(podman ps -a -q)'
+alias podman-stop-running='podman stop $(podman ps -q)'
+alias podman-remove-exited='podman rm -v $(podman ps -a -q -f status=exited)'
+alias podman-remove-dangling='podman rmi $(podman images -f "dangling=true" -q)'
+alias podman-remove-untagged='podman rmi $(podman images | grep "^<none>" | awk "{print $3}")'
+alias podman-remove-stopped='podman rm $(podman ps -qa)'
+alias podman-gc='podman system prune --volumes'
 
 # git
 alias gupc='gpr && git-delete-merged'
