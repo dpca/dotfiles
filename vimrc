@@ -99,6 +99,11 @@ set nobackup " Do not persist backup after successful write
 set backupcopy=auto " Use rename-and-write-new method whenever safe
 set backupdir^=~/.vim/backup//
 
+" Filetype detection
+filetype on
+filetype plugin on
+filetype indent on
+
 " Tab settings
 set tabstop=2
 set shiftwidth=2
@@ -192,6 +197,9 @@ autocmd BufRead,BufNewFile */templates/*.yml set ft=helm
 " Terraform settings
 autocmd BufWritePre *.tfvars lua vim.lsp.buf.format()
 autocmd BufWritePre *.tf lua vim.lsp.buf.format()
+
+" Make settings
+autocmd FileType make setlocal noexpandtab tabstop=8
 
 "highlight ExtraWhitespace ctermbg=red guibg=red
 "match ExtraWhitespace /\s\+$/
@@ -359,7 +367,7 @@ for _, lsp in ipairs(servers) do
   })
 end
 
-require'lspconfig'.tsserver.setup({
+require'lspconfig'.ts_ls.setup({
   filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
   on_attach = on_attach,
   capabilities = capabilities,
