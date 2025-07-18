@@ -17,7 +17,10 @@ alias podman-remove-stopped='podman rm $(podman ps -qa)'
 alias podman-gc='podman system prune --volumes'
 
 # git
-alias gupc='gpr && git-delete-merged'
+alias gco='git checkout'
+alias gst='git status'
+alias gupc='git pull --rebase && git-delete-merged'
+alias ggpush='git push origin "$(git_current_branch)"'
 
 # rg
 alias rg='rg --hidden'

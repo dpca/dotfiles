@@ -1,7 +1,13 @@
 tap "homebrew/cask-fonts"
 
+# Testing
+brew "atuin"
+brew "glow"
+brew "duf"
+brew "dust"
+brew "btop"
+
 # OS
-brew "autojump"
 brew "bash"
 brew "cmake"
 brew "eza"
@@ -17,6 +23,7 @@ brew "ripgrep"
 brew "rga" # ripgrep-all
 brew "tmux"
 brew "watchman"
+brew "zoxide"
 brew "zsh"
 cask "qlmarkdown"
 cask "qlstephen"
@@ -45,3 +52,6 @@ cask "gpg-suite"
 # Databases
 brew "postgresql"
 brew "redis"
+
+brew "zsh-syntax-highlighting"
+brew "zsh-history-substring-search"

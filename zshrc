@@ -1,60 +1,4 @@
-# Enable Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
-# Initialization code that may require console input (password prompts, [y/n]
-# confirmations, etc.) must go above this block; everything else may go below.
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
-fi
-
-# Path to oh-my-zsh installation.
-export ZSH=~/.oh-my-zsh
-
-ZSH_THEME="powerlevel10k/powerlevel10k"
-
-plugins=(
-autojump
-brew
-bundler
-cp
-docker
-docker-compose
-fzf
-git
-node
-npm
-macos
-mise
-per-directory-history
-python
-ruby
-tmux
-yarn
-)
-
-export PATH="/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
-
-# For pip installing psycopg2
-export LDFLAGS='-L/usr/local/lib -L/usr/local/opt/openssl/lib -L/usr/local/opt/readline/lib'
-
-source $ZSH/oh-my-zsh.sh
-
-# Load .env file if it exists
-[ -f ~/.env ] && source ~/.env
-
-if [[ -n $SSH_CONNECTION ]]; then
-  export EDITOR='vi'
-else
-  export EDITOR='nvim'
-fi
-
-# Less
-export LESS=-R
-
-# Use neovim if it's installed
-if type nvim > /dev/null 2>&1; then
-  alias vim='nvim'
-fi
-
-export PATH="$HOME/.bin:$HOME/.local/bin:$PATH"
+export PATH="$HOME/.bin:$HOME/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/bin:/bin:/usr/sbin:/sbin"
 
 if [[ -d "$HOME/.workbin" ]]; then
   export PATH="$HOME/.workbin:$PATH"
@@ -65,31 +9,41 @@ if [[ -d "$HOME/go/bin" ]]; then
   export PATH="$HOME/go/bin:$PATH"
 fi
 
-# fzf
+export EDITOR="nvim"
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
-
-# aliases
-[[ -f ~/.aliases ]] && source ~/.aliases
-[[ -f ~/.workaliases ]] && source ~/.workaliases
-
-# Python certs
-export PATH="/usr/local/opt/openssl@1.1/bin:$PATH"
-export REQUESTS_CA_BUNDLE=/usr/local/etc/openssl@1.1/cert.pem
-
-# Docker
-export COMPOSE_DOCKER_CLI_BUILD=1
-
+export LESS=-R
 export BAT_THEME="Dracula"
 
-fpath+=~/.zfunc
-autoload zmv
+# Use neovim if it's installed
+if type nvim > /dev/null 2>&1; then
+  alias vim='nvim'
+fi
+
+# Enable completion
 autoload -Uz compinit
 compinit
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[ -f "/Users/dcahoon/.ghcup/env" ] && source "/Users/dcahoon/.ghcup/env" # ghcup-env
-eval "$(uv generate-shell-completion zsh)"
+autoload -U select-word-style
+select-word-style bash
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-[[ $commands[kubectl] ]] && source <(kubectl completion zsh)
+# Prefix-aware search history
+autoload -U history-search-end
+zle -N history-beginning-search-backward-end history-search-end
+zle -N history-beginning-search-forward-end history-search-end
+bindkey "^[[A" history-beginning-search-backward-end
+bindkey "^[[B" history-beginning-search-forward-end
+
+[[ -f ~/.aliases ]] && source ~/.aliases
+[[ -f ~/.workaliases ]] && source ~/.workaliases
+
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+
+# https://mise.jdx.dev/
+eval "$(mise activate zsh)"
+# https://github.com/ajeetdsouza/zoxide
+eval "$(zoxide init --cmd j zsh)"
+# https://docs.atuin.sh/
+eval "$(atuin init zsh --disable-up-arrow)"
+# https://starship.rs/
+eval "$(starship init zsh)"
