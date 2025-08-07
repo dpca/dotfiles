@@ -217,18 +217,23 @@ require('gitsigns').setup()
 require('telescope').load_extension('fzf')
 require'nvim-treesitter.configs'.setup {
   ensure_installed = {
+    "bash",
+    "dockerfile",
+    "go",
     "haskell",
+    "helm",
     "javascript",
     "json",
+    "jsonnet",
     "lua",
     "python",
     "ruby",
+    "rust",
+    "terraform",
     "toml",
     "typescript",
     "vim",
     "yaml",
-    "rust",
-    "go",
   },
   sync_install = false,
   highlight = {
@@ -344,37 +349,69 @@ vim.diagnostic.config({
 
 local capabilities = require('cmp_nvim_lsp').default_capabilities(vim.lsp.protocol.make_client_capabilities())
 
-local servers = {
-  "bashls",
-  "cssls",
-  "eslint",
-  "flow",
-  "gopls",
-  "hls",
-  "html",
-  "jsonls",
-  "pyright",
-  "solargraph",
+local lsp_servers = {
+  { "ansiblels" },
+  { "bashls" },
+  { "cssls" },
+  { "eslint" },
+  { "flow" },
+  { "gopls" },
+  { "hls" },
+  { "html" },
+  { "jsonls" },
+  { "solargraph" },
+  { "terraformls" },
+  { "ty" },
+  {
+    "ts_ls",
+    {
+      filetypes = { "typescript", "typescriptreact", "typescript.tsx" }
+    }
+  },
+  {
+    "jsonnet_ls",
+    {
+      settings = {
+        ext_vars = {},
+        formatting = {
+          -- default values
+          Indent              = 2,
+          MaxBlankLines       = 2,
+          StringStyle         = 'single',
+          CommentStyle        = 'slash',
+          PrettyFieldNames    = true,
+          PadArrays           = false,
+          PadObjects          = true,
+          SortImports         = true,
+          UseImplicitPlus     = true,
+          StripEverything     = false,
+          StripComments       = false,
+          StripAllButComments = false,
+        },
+      },
+    }
+  },
 }
 
-for _, lsp in ipairs(servers) do
-  require'lspconfig'[lsp].setup({
+for _, lsp in ipairs(lsp_servers) do
+  config = {
     on_attach = on_attach,
     capabilities = capabilities,
     flags = {
       debounce_text_changes = 150,
     }
-  })
-end
-
-require'lspconfig'.ts_ls.setup({
-  filetypes = { "typescript", "typescriptreact", "typescript.tsx" },
-  on_attach = on_attach,
-  capabilities = capabilities,
-  flags = {
-    debounce_text_changes = 150,
   }
-})
+
+  local name, lspconfig = lsp[1], lsp[2]
+  if lspconfig then
+    for k,v in pairs(lspconfig) do
+      config[k] = v
+    end
+  end
+
+  vim.lsp.enable(name)
+  vim.lsp.config(name, config)
+end
 
 rt.setup({
   tools = {
@@ -387,41 +424,5 @@ rt.setup({
     capabilities = capabilities},
 })
 
-require'lspconfig'.hls.setup{
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-require('lspconfig').terraformls.setup{
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-require'lspconfig'.ansiblels.setup{
-  on_attach = on_attach,
-  capabilities = capabilities,
-}
-
-require'lspconfig'.jsonnet_ls.setup{
-  on_attach = on_attach,
-  capabilities = capabilities,
-  settings = {
-    ext_vars = {},
-    formatting = {
-      -- default values
-      Indent              = 2,
-      MaxBlankLines       = 2,
-      StringStyle         = 'single',
-      CommentStyle        = 'slash',
-      PrettyFieldNames    = true,
-      PadArrays           = false,
-      PadObjects          = true,
-      SortImports         = true,
-      UseImplicitPlus     = true,
-      StripEverything     = false,
-      StripComments       = false,
-      StripAllButComments = false,
-    },
-  },
-}
+vim.lsp.set_log_level("off")
 EOF
