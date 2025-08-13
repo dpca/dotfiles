@@ -9,6 +9,10 @@ if [[ -d "$HOME/go/bin" ]]; then
   export PATH="$HOME/go/bin:$PATH"
 fi
 
+if [[ -n '$TMUX' ]]; then;
+  bindkey -e
+fi
+
 export EDITOR="nvim"
 export FZF_DEFAULT_COMMAND='rg --files --hidden'
 export LESS=-R
