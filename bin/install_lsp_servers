@@ -2,29 +2,64 @@
 
 # Installs LSP servers for neovim
 
-set -e
+set -eo pipefail
 
-npm i -g \
-  bash-language-server \
-  typescript \
-  typescript-language-server \
-  vscode-langservers-extracted \
-  @ansible/ansible-language-server
+lsps=(
+  ansible
+  bash
+  go
+  helm
+  json
+  jsonnet
+  python
+  ruby
+  rust
+  terraform
+  typescript
+  quit
+)
 
-gem install \
-  solargraph \
-  standard \
-  rubocop-graphql \
-  rubocop-rails \
-  rubocop-rspec
-
-pipx install pyright ruff ansible-lint
-
-brew install hashicorp/tap/terraform-ls
-
-go install github.com/grafana/jsonnet-language-server@latest
-go install golang.org/x/tools/gopls@latest
-
-# Install Rust Analyzer
-curl -L https://github.com/rust-lang/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-apple-darwin.gz | gunzip -c - > ~/.local/bin/rust-analyzer
-chmod +x ~/.local/bin/rust-analyzer
+select lsp in "${lsps[@]}"; do
+  case $lsp in
+    ansible)
+      npm i -g @ansible/ansible-language-server
+      ;;
+    bash)
+      npm i -g bash-language-server
+      ;;
+    go)
+      go install golang.org/x/tools/gopls@latest
+      ;;
+    helm)
+      brew install helm-ls
+      ;;
+    json)
+      npm i -g vscode-langservers-extracted
+      ;;
+    jsonnet)
+      go install github.com/grafana/jsonnet-language-server@latest
+      ;;
+    python)
+      uv tool install ty --upgrade
+      uv tool install ruff --upgrade
+      ;;
+    ruby)
+      gem install solargraph standard rubocop-graphql rubocop-rails rubocop-rspec
+      ;;
+    rust)
+      curl -L https://github.com/rust-lang/rust-analyzer/releases/latest/download/rust-analyzer-x86_64-apple-darwin.gz | gunzip -c - > ~/.local/bin/rust-analyzer
+      chmod +x ~/.local/bin/rust-analyzer
+      ;;
+    terraform)
+      brew install hashicorp/tap/terraform-ls
+      ;;
+    typescript)
+      npm i -g typescript typescript-language-server
+      ;;
+    quit)
+      break
+      ;;
+    *)
+      echo "Oops, shouldn't be here"
+  esac
+done
