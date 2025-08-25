@@ -19,7 +19,24 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
   spec = {
     { "akinsho/bufferline.nvim", dependencies = "nvim-tree/nvim-web-devicons" },
-    { "christoomey/vim-tmux-navigator" },
+    {
+      "christoomey/vim-tmux-navigator",
+      cmd = {
+        "TmuxNavigateLeft",
+        "TmuxNavigateDown",
+        "TmuxNavigateUp",
+        "TmuxNavigateRight",
+        "TmuxNavigatePrevious",
+        "TmuxNavigatorProcessList",
+      },
+      keys = {
+        { "<c-h>", "<cmd><C-U>TmuxNavigateLeft<cr>" },
+        { "<c-j>", "<cmd><C-U>TmuxNavigateDown<cr>" },
+        { "<c-k>", "<cmd><C-U>TmuxNavigateUp<cr>" },
+        { "<c-l>", "<cmd><C-U>TmuxNavigateRight<cr>" },
+        { "<c-\\>", "<cmd><C-U>TmuxNavigatePrevious<cr>" },
+      },
+    },
     { "dracula/vim", as = "dracula" },
     { "hrsh7th/nvim-cmp", dependencies = { "hrsh7th/cmp-nvim-lsp", "hrsh7th/cmp-buffer" } },
     { "lewis6991/gitsigns.nvim", },
@@ -90,12 +107,6 @@ end
 
 -- Clear search highlight
 vim.keymap.set('n', '<CR>', ':noh<CR><CR>', { silent = true, noremap = true })
-
--- Split navigation
-vim.keymap.set('n', '<C-j>', '<C-W>j', { noremap = true })
-vim.keymap.set('n', '<C-k>', '<C-W>k', { noremap = true })
-vim.keymap.set('n', '<C-h>', '<C-W>h', { noremap = true })
-vim.keymap.set('n', '<C-l>', '<C-W>l', { noremap = true })
 
 -- Faster viewport scrolling
 vim.keymap.set('n', '<C-e>', '3<C-e>', { noremap = true })
