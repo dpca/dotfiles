@@ -18,6 +18,7 @@ alias podman-gc='podman system prune --volumes'
 
 # git
 alias gco='git checkout'
+alias gcom='git checkout "$(git-default-branch)"'
 alias gst='git status'
 alias gupc='git pull --rebase && git-delete-merged'
 alias ggpush='git push origin "$(git_current_branch)"'
