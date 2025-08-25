@@ -9,10 +9,9 @@ Dotfiles and setup scripts to automate macOS setup.
 
 ```bash
 git clone git@github.com:dpca/dotfiles.git ~/dotfiles
+~/dotfiles/create-symlinks.sh
 ~/dotfiles/setup/mac
 ```
-
-Run `rcup` after adding new files to the directory to properly symlink them.
 
 ## Settings
 
