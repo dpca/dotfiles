@@ -48,7 +48,7 @@ require("lazy").setup({
     { "tpope/vim-surround" },
   },
   install = { colorscheme = { "dracula" } },
-  checker = { enabled = true },
+  checker = { enabled = false },
   rocks = { enabled = false },
 })
 
@@ -232,6 +232,7 @@ end
 
 cmp.setup {
   mapping = {
+    ['<CR>'] = cmp.mapping.confirm({ select = false }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
     ["<Tab>"] = cmp.mapping(function(fallback)
       if cmp.visible() then
         cmp.select_next_item()

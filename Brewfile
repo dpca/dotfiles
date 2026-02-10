@@ -1,11 +1,11 @@
-tap "homebrew/cask-fonts"
-
 # Testing
 brew "atuin"
 brew "glow"
 brew "duf"
 brew "dust"
 brew "btop"
+brew "gdu"
+brew "jless"
 
 # OS
 brew "bash"
@@ -17,7 +17,6 @@ brew "git"
 brew "mise"
 brew "neovim"
 brew "openssl"
-brew "rcm"
 brew "reattach-to-user-namespace"
 brew "ripgrep"
 brew "rga" # ripgrep-all
@@ -43,6 +42,8 @@ brew "qt5"
 brew "shellcheck"
 brew "ssh-copy-id"
 brew "tree"
+brew "yq"
+brew "prek"
 
 # Programming language prerequisites and package managers
 brew "coreutils"
@@ -53,5 +54,6 @@ cask "gpg-suite"
 brew "postgresql"
 brew "redis"
 
+# Zsh extras
 brew "zsh-syntax-highlighting"
 brew "zsh-history-substring-search"

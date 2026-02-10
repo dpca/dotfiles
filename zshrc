@@ -39,6 +39,7 @@ bindkey "^[[B" history-beginning-search-forward-end
 
 [[ -f ~/.aliases ]] && source ~/.aliases
 [[ -f ~/.workaliases ]] && source ~/.workaliases
+[[ -f ~/.env ]] && source ~/.env
 
 source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
